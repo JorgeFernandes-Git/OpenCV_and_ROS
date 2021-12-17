@@ -1,0 +1,14 @@
+<launch>
+
+<!-- roslaunch lidar_example lidar.launch -->
+
+<!-- play the bag file in a loop -->
+    <node pkg="rosbag" type="play" name="rosbag_play" args="--clock $(find lidar_example)/Lidar_bag/lidar_example.bag -l"/>
+
+<!--     Subscriber -->
+    <node name="lidar_subscriber" pkg="lidar_example" type="lidar_subscriber.py" output="screen"/>
+
+<!-- open rviz with config -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find lidar_example)/lidar_config.rviz"/>
+
+</launch>
