@@ -41,6 +41,13 @@
         <param name="translation" value="0.343" />
     </node>
 
-
+<!--     sun to mars -->
+    <node name="sun_to_mars" pkg="circular_frame" type="circular_frame.py" output="screen">
+        <remap from="parent" to="sun"/>
+        <remap from="child" to="mars"/>
+        <param name="dist_to_parent" value="1.52" />
+        <param name="period" value="1.88" />
+        <param name="translation" value="0.808" />
+    </node>
 
 </launch>

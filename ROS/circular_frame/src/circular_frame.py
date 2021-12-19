@@ -6,6 +6,7 @@ import rospy
 import tf_conversions
 import tf2_ros
 import geometry_msgs.msg
+
 from math import *
 
 
@@ -35,12 +36,12 @@ def main():
         t.transform.translation.x = dist_to_parent * cos(alpha)
         t.transform.translation.y = dist_to_parent * sin(alpha)
         t.transform.translation.z = 0.0
-        q = tf_conversions.transformations.quaternion_from_euler(0, 0, translation)
-        t.transform.rotation.x = q[0]
-        t.transform.rotation.y = q[1]
-        t.transform.rotation.z = q[2]
-        t.transform.rotation.w = q[3]
-        # t.transform.rotation.w = 1
+        # q = tf_conversions.transformations.quaternion_from_euler(0, 0, translation)
+        # t.transform.rotation.x = q[0]
+        # t.transform.rotation.y = q[1]
+        # t.transform.rotation.z = q[2]
+        # t.transform.rotation.w = q[3]
+        t.transform.rotation.w = 1
 
         br.sendTransform(t)
 
