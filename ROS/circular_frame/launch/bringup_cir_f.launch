@@ -1,10 +1,46 @@
 <launch>
 
-<!-- roslaunch bringup_cir_f.launch -->
+<!-- roslaunch circular_frame bringup_cir_f.launch  -->
 
+<!-- open rviz with config -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find circular_frame)/solar_system.rviz"/>
+
+<!--     sun to mercury -->
+    <node name="sun_to_mercury" pkg="circular_frame" type="circular_frame.py" output="screen">
+            <remap from="parent" to="sun"/>
+            <remap from="child" to="mercury"/>
+            <param name="dist_to_parent" value="0.387" />
+            <param name="period" value="0.241" />
+            <param name="translation" value="1.59" />
     </node>
-    <node name="publisherC" pkg="bringup_example" type="publisher.py" output="screen">
-            <remap from="/topic" to="/dog2"/>
+
+<!--     sun to venus -->
+    <node name="sun_to_venus" pkg="circular_frame" type="circular_frame.py" output="screen">
+        <remap from="parent" to="sun"/>
+        <remap from="child" to="venus"/>
+        <param name="dist_to_parent" value="0.723" />
+        <param name="period" value="0.615" />
+        <param name="translation" value="1.18" />
     </node>
+
+
+<!--     sun to earth -->
+    <node name="sun_to_earth" pkg="circular_frame" type="circular_frame.py" output="screen">
+        <remap from="parent" to="sun"/>
+        <remap from="child" to="earth"/>
+        <param name="dist_to_parent" value="1" />
+        <param name="period" value="1" />
+        <param name="translation" value="1" />
+    </node>
+
+    <node name="earth_to_moon" pkg="circular_frame" type="circular_frame.py" output="screen">
+        <remap from="parent" to="earth"/>
+        <remap from="child" to="moon"/>
+        <param name="dist_to_parent" value="0.257" />
+        <param name="period" value="0.748" />
+        <param name="translation" value="0.343" />
+    </node>
+
+
 
 </launch>

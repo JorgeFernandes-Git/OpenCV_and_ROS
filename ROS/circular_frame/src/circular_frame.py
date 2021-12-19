@@ -10,7 +10,6 @@ from math import *
 
 
 def main():
-
     rospy.init_node('circular_frame')
     rate = rospy.Rate(100)
 
@@ -19,12 +18,14 @@ def main():
 
     alpha = 0
     dist_to_parent = rospy.get_param("~dist_to_parent")
+    period = rospy.get_param("~period")
+    translation = rospy.get_param("~translation")
 
     while not rospy.is_shutdown():
 
-        alpha += 0.01
+        alpha += (1 / period) / 100
 
-        if alpha > 2*pi:
+        if alpha > 2 * pi:
             alpha = 0
 
         t.header.stamp = rospy.Time.now()
@@ -33,12 +34,12 @@ def main():
         t.transform.translation.x = dist_to_parent * cos(alpha)
         t.transform.translation.y = dist_to_parent * sin(alpha)
         t.transform.translation.z = 0.0
-        # q = tf_conversions.transformations.quaternion_from_euler(0, 0, 0)
-        # t.transform.rotation.x = q[0]
-        # t.transform.rotation.y = q[1]
-        # t.transform.rotation.z = q[2]
-        # t.transform.rotation.w = q[3]
-        t.transform.rotation.w = 1
+        q = tf_conversions.transformations.quaternion_from_euler(0, 0, translation)
+        t.transform.rotation.x = q[0]
+        t.transform.rotation.y = q[1]
+        t.transform.rotation.z = q[2]
+        t.transform.rotation.w = q[3]
+        # t.transform.rotation.w = 1
 
         br.sendTransform(t)
 
