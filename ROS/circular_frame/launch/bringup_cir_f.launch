@@ -1,0 +1,10 @@
+<launch>
+
+<!-- roslaunch bringup_cir_f.launch -->
+
+    </node>
+    <node name="publisherC" pkg="bringup_example" type="publisher.py" output="screen">
+            <remap from="/topic" to="/dog2"/>
+    </node>
+
+</launch>
