@@ -33,6 +33,7 @@
         <param name="translation" value="1" />
     </node>
 
+<!--     earth to moon -->
     <node name="earth_to_moon" pkg="circular_frame" type="circular_frame.py" output="screen">
         <remap from="parent" to="earth"/>
         <remap from="child" to="moon"/>
