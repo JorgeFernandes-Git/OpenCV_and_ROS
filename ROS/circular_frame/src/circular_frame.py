@@ -11,7 +11,8 @@ from math import *
 
 def main():
     rospy.init_node('circular_frame')
-    rate = rospy.Rate(100)
+    rate_value = 100
+    rate = rospy.Rate(rate_value)
 
     br = tf2_ros.TransformBroadcaster()
     t = geometry_msgs.msg.TransformStamped()
@@ -23,7 +24,7 @@ def main():
 
     while not rospy.is_shutdown():
 
-        alpha += (1 / period) / 100
+        alpha += (1 / period) / rate_value
 
         if alpha > 2 * pi:
             alpha = 0

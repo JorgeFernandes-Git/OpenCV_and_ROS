@@ -23,7 +23,6 @@
         <param name="translation" value="1.18" />
     </node>
 
-
 <!--     sun to earth -->
     <node name="sun_to_earth" pkg="circular_frame" type="circular_frame.py" output="screen">
         <remap from="parent" to="sun"/>
