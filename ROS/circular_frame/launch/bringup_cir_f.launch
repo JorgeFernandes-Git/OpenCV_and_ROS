@@ -50,4 +50,7 @@
         <param name="translation" value="0.808" />
     </node>
 
+<!--     distance from mercury to moon -->
+    <node name="mercury_to_moon" pkg="circular_frame" type="mercury_to_moon.py" output="screen" />
+
 </launch>
