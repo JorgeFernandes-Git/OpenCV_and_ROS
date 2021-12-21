@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot name="scara">
+
+<!--  base link-->
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.3"/>
+        <geometry>
+          <cylinder length="0.6" radius="0.3"/>
+        </geometry>
+    </visual>
+  </link>
+
+<!--  link 1-->
+  <link name="link1">
+    <visual>
+      <origin rpy="0 0 0" xyz="1.5 0 0.3"/>
+        <geometry>
+          <box size="3 0.6 0.6"/>
+        </geometry>
+    </visual>
+  </link>
+
+<!--  joint base link to link 1 (6.28 = 2*PI)-->
+  <joint name="base_link_to_link1" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="0.0" upper="6.28" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0 0 0.6"/>
+    <parent link="base_link"/>
+    <child link="link1"/>
+  </joint>
+
+</robot>
