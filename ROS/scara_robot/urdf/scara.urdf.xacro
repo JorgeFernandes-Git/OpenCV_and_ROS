@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<robot name="scara">
+
+    <!--    define materials-->
+    <material name="blue">
+        <color rgba="0 0 0.8 0.5"/>
+    </material>
+
+    <material name="green">
+        <color rgba="0 1 0 0.5"/>
+    </material>
+
+    <!--    <material name="green">-->
+    <!--        <color rgba="1 1 1 1"/>-->
+    <!--    </material>-->
+
+    <!--  base link-->
+    <link name="base_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.5"/>
+            <geometry>
+                <cylinder length="1" radius="0.3"/>
+            </geometry>
+            <material name="green"/>
+        </visual>
+    </link>
+
+    <!--  link 1b-->
+    <link name="link1b">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.6" radius="0.3"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+
+    <!--  link 1-->
+    <link name="link1">
+        <visual>
+            <origin rpy="0 0 0" xyz="1.5 0 0"/>
+            <geometry>
+                <box size="3 0.6 0.6"/>
+            </geometry>
+            <material name="green"/>
+        </visual>
+    </link>
+
+    <!--  link 2b-->
+    <link name="link2b">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.6" radius="0.3"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+
+    <!--  link 2-->
+    <link name="link2">
+        <visual>
+            <origin rpy="0 0 0" xyz="1.5 0 0"/>
+            <geometry>
+                <box size="3 0.6 0.6"/>
+            </geometry>
+            <material name="green"/>
+        </visual>
+    </link>
+
+    <!--  link 2c-->
+    <link name="link2c">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.6" radius="0.3"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+
+    <!--  link ee-->
+    <link name="link_ee">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 1"/>
+            <geometry>
+                <cylinder length="2" radius="0.1"/>
+            </geometry>
+            <material name="green"/>
+        </visual>
+    </link>
+
+    <!--    *********************************** JOINTS ***********************************-->
+
+    <!--  joint base link to link 1 (6.28 = 2*PI)-->
+    <joint name="base_link_to_link1" type="continuous">
+        <axis xyz="0 0 1"/>
+        <limit effort="1000.0" lower="0.0" upper="6.28" velocity="0.5"/>
+        <origin rpy="0 0 0" xyz="0 0 1.3"/>
+        <parent link="base_link"/>
+        <child link="link1"/>
+    </joint>
+
+    <!--    fixed link1 to link 1b-->
+    <joint name="link1_to_link1b" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="link1"/>
+        <child link="link1b"/>
+    </joint>
+
+    <!--  link 1 to link 2b-->
+    <joint name="link1_to_link2b" type="fixed">
+        <origin rpy="0 0 0" xyz="3 0 0"/>
+        <parent link="link1"/>
+        <child link="link2b"/>
+    </joint>
+
+    <!--    link 2b to link 2-->
+    <joint name="link2b_to_link2" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="1000.0" lower="-2.5" upper="2.5" velocity="0.5"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="link2b"/>
+        <child link="link2"/>
+    </joint>
+
+    <!--  link 2 to link 2c-->
+    <joint name="link2_to_link2c" type="fixed">
+        <origin rpy="0 0 0" xyz="3 0 0"/>
+        <parent link="link2"/>
+        <child link="link2c"/>
+    </joint>
+
+    <joint name="link2c_to_link_ee" type="prismatic">
+        <axis xyz="0 0 1"/>
+        <parent link="link2c"/>
+        <child link="link_ee"/>
+        <limit effort="1000.0" lower="-1.5" upper="-0.5" velocity="0.5"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+</robot>
