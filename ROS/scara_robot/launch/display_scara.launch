@@ -1,17 +1,20 @@
 <?xml version="1.0"?>
 <launch>
 
-<!-- roslaunch scara_robot display_scara.launch -->
+    <!-- roslaunch scara_robot display_scara.launch -->
 
-<!-- open rviz with config -->
+    <!-- open rviz with config -->
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find scara_robot)/config/scara.rviz"/>
 
 
-<!--     launch urdf file, xacro and gui-->
+    <!--     launch urdf file, xacro and gui-->
     <arg name="model" default="$(find scara_robot)/urdf/scara.urdf"/>
     <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
     <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+<!--    gazebo -->
+<!--    <node name="model" pkg="gazebo_ros" type="spawn_model" args="-file $(find scara_robot)//urdf/scara.urdf" -model model/>-->
 
 
 </launch>
