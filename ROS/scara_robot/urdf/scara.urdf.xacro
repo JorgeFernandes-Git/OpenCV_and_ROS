@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<robot name="scara">
+<robot name="scara" xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:property name="height" value="1" />
 
     <!--    define materials-->
     <material name="blue">
@@ -19,7 +20,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0.5"/>
             <geometry>
-                <cylinder length="1" radius="0.3"/>
+                <cylinder length="${height}" radius="0.3"/>
             </geometry>
             <material name="green"/>
         </visual>
