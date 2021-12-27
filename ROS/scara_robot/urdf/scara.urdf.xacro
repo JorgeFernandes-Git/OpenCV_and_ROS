@@ -1,50 +1,16 @@
 <?xml version="1.0"?>
 <robot name="scara" xmlns:xacro="http://ros.org/wiki/xacro">
-<!--    <xacro:include filename="$(find scara_robot)/urdf/scara.gazebo"/>-->
     <xacro:property name="height" value="1"/>
     <xacro:property name="length" value="3"/>
 
-    <gazebo reference="base_link">
-        <material>Gazebo/Green</material>
-    </gazebo>
-
-    <gazebo reference="link1">
-        <material>Gazebo/Green</material>
-    </gazebo>
-
-    <gazebo reference="link2">
-        <material>Gazebo/Green</material>
-    </gazebo>
-
-    <gazebo reference="link_ee">
-        <material>Gazebo/Green</material>
-    </gazebo>
-
-    <gazebo reference="link1b">
-        <material>Gazebo/Blue</material>
-    </gazebo>
-
-    <gazebo reference="link2b">
-        <material>Gazebo/Blue</material>
-    </gazebo>
-
-    <gazebo reference="link2c">
-        <material>Gazebo/Blue</material>
-    </gazebo>
-
-
     <!--    define materials-->
-    <!--    <material name="blue">-->
-    <!--        <color rgba="0 0 0.8 0.5"/>-->
-    <!--    </material>-->
+    <material name="blue">
+        <color rgba="0 0 0.8 0.5"/>
+    </material>
 
-    <!--    <material name="green">-->
-    <!--        <color rgba="0 1 0 0.5"/>-->
-    <!--    </material>-->
-
-    <!--    <material name="green">-->
-    <!--        <color rgba="1 1 1 1"/>-->
-    <!--    </material>-->
+    <material name="green">
+        <color rgba="0 1 0 0.5"/>
+    </material>
 
     <!--  base link-->
     <link name="base_link">
@@ -53,7 +19,7 @@
             <geometry>
                 <cylinder length="${height}" radius="0.3"/>
             </geometry>
-            <!--            <material name="green"/>-->
+            <material name="green"/>
         </visual>
     </link>
 
@@ -64,7 +30,7 @@
             <geometry>
                 <cylinder length="0.6" radius="0.3"/>
             </geometry>
-            <!--            <material name="blue"/>-->
+            <material name="blue"/>
         </visual>
     </link>
 
@@ -75,7 +41,7 @@
             <geometry>
                 <box size="${length} 0.6 0.6"/>
             </geometry>
-            <!--            <material name="green"/>-->
+            <material name="green"/>
         </visual>
     </link>
 
@@ -86,7 +52,7 @@
             <geometry>
                 <cylinder length="0.6" radius="0.3"/>
             </geometry>
-            <!--            <material name="blue"/>-->
+            <material name="blue"/>
         </visual>
     </link>
 
@@ -108,7 +74,7 @@
             <geometry>
                 <cylinder length="0.6" radius="0.3"/>
             </geometry>
-            <!--            <material name="blue"/>-->
+            <material name="blue"/>
         </visual>
     </link>
 
@@ -119,7 +85,7 @@
             <geometry>
                 <cylinder length="2" radius="0.1"/>
             </geometry>
-            <!--            <material name="green"/>-->
+            <material name="green"/>
         </visual>
     </link>
 

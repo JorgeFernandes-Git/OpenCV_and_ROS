@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- roslaunch scara_robot display_scara.launch -->
+    <!-- roslaunch scara display_scara.launch -->
 
     <!-- open rviz with config -->
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find scara_robot)/config/scara.rviz"/>
@@ -12,36 +12,5 @@
     <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
     <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-
-    <!-- our xacro/urdf model -->
-    <!--    <arg name="model" value="$(find scara_robot)/urdf/scara.urdf.xacro"/>-->
-
-    <!-- load our urdf model (string) into global parameter called "robot_description"-->
-    <!-- xacro parses xacro files and returns a urdf file -->
-    <!--    <param name="robot_description"-->
-    <!--           command="$(find xacro)/xacro $(arg model)"/>-->
-
-
-    <!--                                       gazebo                                                       -->
-    <!-- We use empty_world.launch to start gazebo, changing only the name of the world to be launched -->
-    <!--    <include file="$(find gazebo_ros)/launch/empty_world.launch">-->
-    <!--        <arg name="debug" value="false"/>-->
-    <!--        <arg name="gui" value="true"/>-->
-    <!--        <arg name="paused" value="false"/>-->
-    <!--        <arg name="use_sim_time" value="true"/>-->
-    <!--        <arg name="headless" value="false"/>-->
-    <!--    </include>-->
-
-    <!--    Spawn our robot using urdf_spawner node -->
-    <!--    <node name="urdf_spawner"-->
-    <!--          pkg="gazebo_ros"-->
-    <!--          type="spawn_model"-->
-    <!--          respawn="false"-->
-    <!--          output="screen"-->
-    <!--          args="-z 1.0-->
-    <!--                  -unpause-->
-    <!--                  -urdf-->
-    <!--                  -model robot-->
-    <!--                  -param robot_description"/>-->
 
 </launch>

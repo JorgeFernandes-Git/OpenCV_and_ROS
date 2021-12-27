@@ -1,0 +1,69 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+    <model name="scara">
+        <static>true</static>
+        <link name='base_link'>
+            <pose>0 0 0 0 0 0</pose>
+
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>1</radius>
+                        <length>.3</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>1</radius>
+                        <length>.3</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+
+        <link name='link1b'>
+            <pose>0 0 1 0 0 0</pose>
+
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>.6</radius>
+                        <length>.3</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>.6</radius>
+                        <length>.3</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+
+        <link name='link1'>
+            <pose>0 0 1 0 0 0</pose>
+
+            <collision name='collision'>
+                <geometry>
+                    <box>
+                        <size>1 .6 .6</size>
+                    </box>
+                </geometry>
+            </collision>
+
+            <visual name='visual'>
+                <geometry>
+                    <box>
+                        <size>1 .6 .6</size>
+                    </box>
+                </geometry>
+            </visual>
+        </link>
+    </model>
+</sdf>
