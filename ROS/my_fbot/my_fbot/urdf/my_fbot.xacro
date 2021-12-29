@@ -6,8 +6,10 @@
     <!--    VARIABLES-->
     <xacro:property name="chassis_height" value=".1"/>
     <xacro:property name="chassis_radius" value=".1"/>
+    <xacro:property name="sup_wheels_height" value="-0.0249"/>
 
-    <xacro:property name="wheel_thickness" value=".05"/>
+
+    <xacro:property name="wheel_thickness" value=".025"/>
     <xacro:property name="wheel_radius" value=".05"/>
 
     <!--    MATERIALS-->
@@ -62,28 +64,28 @@
 
         <!--        SUPPORT WHEELS-->
         <collision name='back_caster_collision'>
-            <origin xyz="-${chassis_radius/3} 0 -0.025" rpy=" 0 0 0"/>
+            <origin xyz="-${chassis_radius/3} 0 ${sup_wheels_height}" rpy=" 0 0 0"/>
             <geometry>
                 <sphere radius="${wheel_radius/2}"/>
             </geometry>
         </collision>
 
         <visual name='back_caster_visual'>
-            <origin xyz="-${chassis_radius/3} 0 -0.025" rpy=" 0 0 0"/>
+            <origin xyz="-${chassis_radius/3} 0 ${sup_wheels_height}" rpy=" 0 0 0"/>
             <geometry>
                 <sphere radius="${wheel_radius/2}"/>
             </geometry>
         </visual>
 
         <collision name='front_caster_collision'>
-            <origin xyz="${chassis_radius/3} 0 -0.025" rpy=" 0 0 0"/>
+            <origin xyz="${chassis_radius/3} 0 ${sup_wheels_height}" rpy=" 0 0 0"/>
             <geometry>
                 <sphere radius="${wheel_radius/2}"/>
             </geometry>
         </collision>
 
         <visual name='front_caster_visual'>
-            <origin xyz="${chassis_radius/3} 0 -0.025" rpy=" 0 0 0"/>
+            <origin xyz="${chassis_radius/3} 0 ${sup_wheels_height}" rpy=" 0 0 0"/>
             <geometry>
                 <sphere radius="${wheel_radius/2}"/>
             </geometry>
