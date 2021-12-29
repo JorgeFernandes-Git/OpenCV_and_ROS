@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- roslaunch scara display_scara.launch -->
+    <!-- roslaunch scara_robot display_scara.launch -->
 
     <!-- open rviz with config -->
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find scara_robot)/config/scara.rviz"/>
