@@ -4,11 +4,11 @@
     <xacro:include filename="$(find my_fbot)/urdf/my_fbot.gazebo"/>
 
     <!--    VARIABLES-->
-    <xacro:property name="chassis_height" value=".2"/>
-    <xacro:property name="chassis_radius" value=".25"/>
+    <xacro:property name="chassis_height" value=".1"/>
+    <xacro:property name="chassis_radius" value=".1"/>
 
     <xacro:property name="wheel_thickness" value=".05"/>
-    <xacro:property name="wheel_radius" value=".1"/>
+    <xacro:property name="wheel_radius" value=".05"/>
 
     <!--    MATERIALS-->
     <gazebo reference="chassis">
@@ -34,7 +34,7 @@
 
     <!--    chassis link-->
     <link name='chassis'>
-        <pose>0 0 0.1 0 0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
 
         <inertial>
             <mass value="15.0"/>
@@ -47,14 +47,14 @@
         </inertial>
 
         <collision name='collision'>
-            <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+            <origin xyz="0 0 ${wheel_radius/2}" rpy=" 0 0 0"/>
             <geometry>
                 <cylinder length="${chassis_height}" radius="${chassis_radius}"/>
             </geometry>
         </collision>
 
         <visual name='chassis_visual'>
-            <origin xyz="0 0 0.05" rpy=" 0 0 0"/>
+            <origin xyz="0 0 ${wheel_radius/2}" rpy=" 0 0 0"/>
             <geometry>
                 <cylinder length="${chassis_height}" radius="${chassis_radius}"/>
             </geometry>
@@ -62,28 +62,28 @@
 
         <!--        SUPPORT WHEELS-->
         <collision name='back_caster_collision'>
-            <origin xyz="-0.15 0 -0.05" rpy=" 0 0 0"/>
+            <origin xyz="-${chassis_radius/3} 0 -0.025" rpy=" 0 0 0"/>
             <geometry>
                 <sphere radius="${wheel_radius/2}"/>
             </geometry>
         </collision>
 
         <visual name='back_caster_visual'>
-            <origin xyz="-0.15 0 -0.05" rpy=" 0 0 0"/>
+            <origin xyz="-${chassis_radius/3} 0 -0.025" rpy=" 0 0 0"/>
             <geometry>
                 <sphere radius="${wheel_radius/2}"/>
             </geometry>
         </visual>
 
         <collision name='front_caster_collision'>
-            <origin xyz="0.15 0 -0.05" rpy=" 0 0 0"/>
+            <origin xyz="${chassis_radius/3} 0 -0.025" rpy=" 0 0 0"/>
             <geometry>
                 <sphere radius="${wheel_radius/2}"/>
             </geometry>
         </collision>
 
         <visual name='front_caster_visual'>
-            <origin xyz="0.15 0 -0.05" rpy=" 0 0 0"/>
+            <origin xyz="${chassis_radius/3} 0 -0.025" rpy=" 0 0 0"/>
             <geometry>
                 <sphere radius="${wheel_radius/2}"/>
             </geometry>
@@ -91,16 +91,16 @@
 
         <!--        LIDAR SUPPORT-->
         <collision name='lidar_support_collision'>
-            <origin xyz="-0.15 0 ${chassis_height-0.025}" rpy=" 0 0 0"/>
+            <origin xyz="-0.05 0 ${chassis_height-0.02}" rpy=" 0 0 0"/>
             <geometry>
                 <cylinder length="0.05" radius="0.1"/>
             </geometry>
         </collision>
 
         <visual name='lidar_support_visual'>
-            <origin xyz="-0.15 0 ${chassis_height-0.025}" rpy=" 0 0 0"/>
+            <origin xyz="-0.05 0 ${chassis_height-0.02}" rpy=" 0 0 0"/>
             <geometry>
-                <cylinder length="0.05" radius="0.1"/>
+                <cylinder length="0.02" radius="0.05"/>
             </geometry>
         </visual>
 
@@ -229,14 +229,14 @@
     </joint>
 
     <joint name="camera_joint" type="fixed">
-        <origin xyz="0.22 0 ${chassis_height-0.05}" rpy="0 0 0"/>
+        <origin xyz="0.05 0 ${chassis_height-0.02}" rpy="0 0 0"/>
         <parent link="chassis"/>
         <child link="camera"/>
         <axis xyz="0 1 0"/>
     </joint>
 
     <joint name="hokuyo_joint" type="fixed">
-        <origin xyz="-0.15 0 ${chassis_height}" rpy="0 0 0"/>
+        <origin xyz="-0.05 0 ${chassis_height+0.02}" rpy="0 0 0"/>
         <parent link="chassis"/>
         <child link="hokuyo"/>
         <axis xyz="0 1 0"/>
