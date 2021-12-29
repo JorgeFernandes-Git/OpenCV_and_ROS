@@ -1,12 +1,18 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- roslaunch my_fbot robot_description.launch -->
-
-    <!--     launch urdf file, xacro and gui-->
     <arg name="model" default="$(find my_fbot)/urdf/my_fbot.xacro"/>
-    <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
-<!--    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>-->
-<!--    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>-->
+
+    <!-- send urdf to param server -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find my_fbot)/urdf/my_fbot.xacro'"/>
+
+    <!-- Send fake joint values-->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="use_gui" value="false"/>
+    </node>
+
+    <!-- Send robot states to tf -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false"
+          output="screen"/>
 
 </launch>

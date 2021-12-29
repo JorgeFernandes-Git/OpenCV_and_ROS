@@ -15,7 +15,7 @@
     <include file="$(find my_fbot)/launch/robot_description.launch"/>
 
     <!-- World File -->
-    <arg name="world_file" default="$(find my_fbot)/worlds/empty.world"/>
+    <arg name="world_file" default="$(find my_fbot)/worlds/course.world"/>
 
     <!-- Launch Gazebo World -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -31,7 +31,7 @@
               -x $(arg x) -y $(arg y) -z $(arg z)
               -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
 
-<!--    &lt;!&ndash;launch rviz&ndash;&gt;-->
+    <!--    &lt;!&ndash;launch rviz&ndash;&gt;-->
     <!--    <node name="rviz" pkg="rviz" type="rviz" respawn="false"-->
     <!--          args="-d $(find my_fbot)/my_fbot.rviz"/>-->
 
