@@ -13,11 +13,11 @@ twist = Twist()
 speed = 0.2
 divider = 100
 
-# dictionary with ranges
-ranges_pcss = {"b": {"min": 100, "max": 256},
-               "g": {"min": 100, "max": 256},
-               "r": {"min": 100, "max": 256},
-               }
+# # dictionary with ranges
+# ranges_pcss = {"b": {"min": 100, "max": 256},
+#                "g": {"min": 100, "max": 256},
+#                "r": {"min": 100, "max": 256},
+#                }
 
 
 def onTrackbar(threshold):
@@ -80,10 +80,8 @@ def img_callback(data):
             # CONTROL starts
             err = cx - w / 2
             # print(err)
-            twist.linear.x = speed
-            twist.angular.z = -float(err) / divider
 
-            if err > 80 or err < -80:
+            if err > 100 or err < -100:
                 # deceleration
                 if speed > 0.01:
                     speed -= 0.01
@@ -93,7 +91,6 @@ def img_callback(data):
                     #     divider = divider
                 elif speed <= 0.01:
                     speed = speed
-                twist.linear.x = speed
             else:
                 # acceleration
                 if speed < 0.5:
@@ -104,10 +101,20 @@ def img_callback(data):
                     #     divider = divider
                 elif speed >= 0.5:
                     speed = speed
-                twist.linear.x = speed
 
-            cmd_vel_pub.publish(twist)
-            print(speed, divider)
+            if err > 300 or err < -300:
+                speed = 0
+
+        else:
+            # stop if lose line and rotate to left
+            speed = 0
+            err = -300
+
+        # pub the speed in x and z on topic cmd_vel with Twist msg
+        twist.linear.x = speed
+        twist.angular.z = -float(err) / divider
+        cmd_vel_pub.publish(twist)
+        print(speed, divider, err)
 
         cv2.imshow("mask", mask)
         cv2.imshow("hsv", hsv)
