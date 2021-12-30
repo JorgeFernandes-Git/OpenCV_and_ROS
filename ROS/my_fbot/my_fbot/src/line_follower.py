@@ -10,6 +10,8 @@ from geometry_msgs.msg import Twist
 bridge = CvBridge()
 cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
 twist = Twist()
+speed = 0.2
+divider = 100
 
 # dictionary with ranges
 ranges_pcss = {"b": {"min": 100, "max": 256},
@@ -24,6 +26,9 @@ def onTrackbar(threshold):
 
 def img_callback(data):
     try:
+        global speed
+        global divider
+
         img = bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -75,11 +80,34 @@ def img_callback(data):
             # CONTROL starts
             err = cx - w / 2
             # print(err)
-            twist.linear.x = 0.2
-            twist.angular.z = -float(err) / 100
-            # if err > 80 or err < -80:
-            #     twist.linear.x = 0.05
+            twist.linear.x = speed
+            twist.angular.z = -float(err) / divider
+
+            if err > 80 or err < -80:
+                # deceleration
+                if speed > 0.01:
+                    speed -= 0.01
+                    # if divider > 60:
+                    #     divider -= 1
+                    # elif divider <= 60:
+                    #     divider = divider
+                elif speed <= 0.01:
+                    speed = speed
+                twist.linear.x = speed
+            else:
+                # acceleration
+                if speed < 0.5:
+                    speed += 0.01
+                    # if divider < 100:
+                    #     divider += 1
+                    # elif divider <= 100:
+                    #     divider = divider
+                elif speed >= 0.5:
+                    speed = speed
+                twist.linear.x = speed
+
             cmd_vel_pub.publish(twist)
+            print(speed, divider)
 
         cv2.imshow("mask", mask)
         cv2.imshow("hsv", hsv)

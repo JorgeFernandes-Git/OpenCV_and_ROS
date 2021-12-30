@@ -3,6 +3,10 @@
 <!--roslaunch my_fbot bringup_my_fbot.launch-->
 
 <launch>
+
+    <!--    node to fallow the line-->
+    <!--    <node name="line_follower" pkg="my_fbot" type="line_follower.py" output="screen"/>-->
+
     <!-- Robot pose -->
     <arg name="x" default="0"/>
     <arg name="y" default="2.33"/>
@@ -15,7 +19,10 @@
     <include file="$(find my_fbot)/launch/robot_description.launch"/>
 
     <!-- World File -->
+    <!--    <arg name="world_file" default="$(find my_fbot)/worlds/empty.world"/>-->
+    <!--    <arg name="world_file" default="$(find my_fbot)/worlds/house.world"/>-->
     <arg name="world_file" default="$(find my_fbot)/worlds/course.world"/>
+
 
     <!-- Launch Gazebo World -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
