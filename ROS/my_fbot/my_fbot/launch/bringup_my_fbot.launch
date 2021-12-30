@@ -7,6 +7,9 @@
     <!--    node to fallow the line-->
     <!--    <node name="line_follower" pkg="my_fbot" type="line_follower.py" output="screen"/>-->
 
+    <!--    node lidar scan-->
+    <!--    <node name="lidar_scan" pkg="my_fbot" type="lidar_scan.py" output="screen"/>-->
+
     <!-- Robot pose -->
     <arg name="x" default="0"/>
     <arg name="y" default="2.33"/>
@@ -20,8 +23,8 @@
 
     <!-- World File -->
     <!--    <arg name="world_file" default="$(find my_fbot)/worlds/empty.world"/>-->
-    <!--    <arg name="world_file" default="$(find my_fbot)/worlds/house.world"/>-->
-    <arg name="world_file" default="$(find my_fbot)/worlds/course.world"/>
+    <arg name="world_file" default="$(find my_fbot)/worlds/house.world"/>
+    <!--    <arg name="world_file" default="$(find my_fbot)/worlds/course.world"/>-->
 
 
     <!-- Launch Gazebo World -->

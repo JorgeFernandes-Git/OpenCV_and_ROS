@@ -20,8 +20,8 @@ divider = 100
 #                }
 
 
-def onTrackbar(threshold):
-    pass
+# def onTrackbar(threshold):
+#     pass
 
 
 def img_callback(data):
