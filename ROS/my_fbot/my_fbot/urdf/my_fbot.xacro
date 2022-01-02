@@ -165,19 +165,19 @@
     <link name="camera">
         <inertial>
             <mass value="0.1"/>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 0.01 0"/>
             <inertia ixx="0.03" ixy="0.0" ixz="0.0" iyy="0.03" iyz="0.0" izz="0.03"/>
         </inertial>
 
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 0.01 0"/>
             <geometry>
                 <sphere radius="0.02"/>
             </geometry>
         </collision>
 
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 0.01 0"/>
             <geometry>
                 <mesh filename="package://computer_vision_pkg/meshes/head.dae" scale=".5 .5 .5"/>
             </geometry>

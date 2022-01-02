@@ -38,44 +38,46 @@ def img_callback(data, lower_yellow, upper_yellow, lower_white, upper_white):
         M_yellow = cv2.moments(mask_yellow)
         M_white = cv2.moments(mask_white)
 
-        if M_yellow['m00'] > 0:
+        if M_yellow['m00'] > 0 and M_white['m00'] > 0:
             cx_yellow = int(M_yellow['m10'] / M_yellow['m00'])
             cy_yellow = int(M_yellow['m01'] / M_yellow['m00'])
             cv2.circle(img, (cx_yellow, cy_yellow), 20, (0, 0, 255), -1)
 
-        if M_white['m00'] > 0:
             cx_white = int(M_white['m10'] / M_white['m00'])
             cy_white = int(M_white['m01'] / M_white['m00'])
             cv2.circle(img, (cx_white, cy_white), 20, (0, 255, 0), -1)
 
-        cx_car = int((cx_white - cx_yellow)/2) + cx_yellow
-        cy_car = cy_white
+            cx_car = int((cx_white - cx_yellow)/2) + cx_yellow
+            cy_car = cy_white
 
-        cv2.circle(img, (cx_car, cy_car), 20, (255, 0, 0), -1)
+            cv2.circle(img, (cx_car, cy_car), 20, (255, 0, 0), -1)
 
-        err = cx_car - w / 2
-        # print(err)
+            err = cx_car - w / 2
+            # print(err)
 
-        if err > 20 or err < -20:
-            # deceleration
-            if speed > 0.01:
-                speed -= 0.01
-                # if divider > 60:
-                #     divider -= 1
-                # elif divider <= 60:
-                #     divider = divider
-            elif speed <= 0.01:
-                speed = speed
+            if err > 20 or err < -20:
+                # deceleration
+                if speed > 0.01:
+                    speed -= 0.01
+                    # if divider > 60:
+                    #     divider -= 1
+                    # elif divider <= 60:
+                    #     divider = divider
+                elif speed <= 0.01:
+                    speed = speed
+            else:
+                # acceleration
+                if speed < 0.5:
+                    speed += 0.01
+                    # if divider < 100:
+                    #     divider += 1
+                    # elif divider <= 100:
+                    #     divider = divider
+                elif speed >= 0.5:
+                    speed = speed
         else:
-            # acceleration
-            if speed < 0.5:
-                speed += 0.01
-                # if divider < 100:
-                #     divider += 1
-                # elif divider <= 100:
-                #     divider = divider
-            elif speed >= 0.5:
-                speed = speed
+            speed = 0
+            err = 0
 
         # pub the speed in x and z on topic cmd_vel with Twist msg
         twist.linear.x = speed
