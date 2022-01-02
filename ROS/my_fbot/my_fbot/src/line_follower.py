@@ -6,25 +6,16 @@ import numpy as np
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
+from functools import partial
 
 bridge = CvBridge()
 cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
 twist = Twist()
-speed = 0.2
+speed = 0.5
 divider = 100
 
-# # dictionary with ranges
-# ranges_pcss = {"b": {"min": 100, "max": 256},
-#                "g": {"min": 100, "max": 256},
-#                "r": {"min": 100, "max": 256},
-#                }
 
-
-# def onTrackbar(threshold):
-#     pass
-
-
-def img_callback(data):
+def img_callback(data, lower_yellow, upper_yellow):
     try:
         global speed
         global divider
@@ -32,33 +23,9 @@ def img_callback(data):
         img = bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-        # # read the values on the trackbars
-        # min_b_pcss = cv2.getTrackbarPos("min B", "hsv")
-        # max_b_pcss = cv2.getTrackbarPos("max B", "hsv")
-        # min_g_pcss = cv2.getTrackbarPos("min G", "hsv")
-        # max_g_pcss = cv2.getTrackbarPos("max G", "hsv")
-        # min_r_pcss = cv2.getTrackbarPos("min R", "hsv")
-        # max_r_pcss = cv2.getTrackbarPos("max R", "hsv")
-        #
-        # # attribute the read values to the ranges dictionary
-        # ranges_pcss["b"]["min"] = min_b_pcss
-        # ranges_pcss["b"]["max"] = max_b_pcss
-        # ranges_pcss["g"]["min"] = min_g_pcss
-        # ranges_pcss["g"]["max"] = max_g_pcss
-        # ranges_pcss["r"]["min"] = min_r_pcss
-        # ranges_pcss["r"]["max"] = max_r_pcss
-
-        # # numpy arrays
-        # lower_yellow = np.array([ranges_pcss['b']['min'], ranges_pcss['g']['min'], ranges_pcss['r']['min']])
-        # upper_yellow = np.array([ranges_pcss['b']['max'], ranges_pcss['g']['max'], ranges_pcss['r']['max']])
-
         # transform the image and show it
         # mask = cv2.inRange(img, mins_pcss, maxs_pcss)  # colors mask
         # img = cv2.bitwise_and(img, img, mask=mask)
-
-        # change below lines to map the color you wanted robot to follow
-        lower_yellow = np.array([10, 10, 10])
-        upper_yellow = np.array([255, 255, 250])
 
         mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
@@ -127,21 +94,27 @@ def img_callback(data):
 
 
 def main():
-    # cv2.namedWindow("hsv")
-    #
-    # # create the trackbars
-    # cv2.createTrackbar("min B", "hsv", 10, 255, onTrackbar)
-    # cv2.createTrackbar("max B", "hsv", 255, 255, onTrackbar)
-    # cv2.createTrackbar("min G", "hsv", 10, 255, onTrackbar)
-    # cv2.createTrackbar("max G", "hsv", 255, 255, onTrackbar)
-    # cv2.createTrackbar("min R", "hsv", 10, 255, onTrackbar)
-    # cv2.createTrackbar("max R", "hsv", 250, 255, onTrackbar)
-
     while not rospy.is_shutdown():
         rospy.init_node('line_follower')
-        img_sub = rospy.Subscriber('/camera/rgb/image_raw', Image, img_callback)
+
+        # from color_segment.py
+        ranges_pcss = {"b": {"min": 0, "max": 39}, "g": {"min": 222, "max": 255}, "r": {"min": 215, "max": 255}}
+
+        # numpy arrays
+        lower_yellow = np.array([ranges_pcss['b']['min'], ranges_pcss['g']['min'], ranges_pcss['r']['min']])
+        upper_yellow = np.array([ranges_pcss['b']['max'], ranges_pcss['g']['max'], ranges_pcss['r']['max']])
+
+        # change below lines to map the color you wanted robot to follow
+        # lower_yellow = np.array([10, 10, 10])
+        # upper_yellow = np.array([255, 255, 250])
+
+        img_sub = rospy.Subscriber('/camera/rgb/image_raw', Image, partial(img_callback,
+                                                                           lower_yellow=lower_yellow,
+                                                                           upper_yellow=upper_yellow))
 
         rospy.spin()
+
+    cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
