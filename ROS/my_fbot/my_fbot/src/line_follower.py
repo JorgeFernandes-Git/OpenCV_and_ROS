@@ -140,6 +140,7 @@ def main():
     while not rospy.is_shutdown():
         rospy.init_node('line_follower')
         img_sub = rospy.Subscriber('/camera/rgb/image_raw', Image, img_callback)
+
         rospy.spin()
 
 

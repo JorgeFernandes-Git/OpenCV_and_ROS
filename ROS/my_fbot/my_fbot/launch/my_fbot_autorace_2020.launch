@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--roslaunch my_fbot bringup_my_fbot.launch-->
+
+<launch>
+
+    <!--    node to fallow the line-->
+    <!--    <node name="line_follower" pkg="my_fbot" type="line_follower.py" output="screen"/>-->
+
+    <!--    node lidar scan-->
+    <!--    <node name="lidar_scan" pkg="my_fbot" type="lidar_scan.py" output="screen"/>-->
+
+    <!-- Robot pose -->
+    <arg name="x" default="0"/>
+    <arg name="y" default="2.33"/>
+    <arg name="z" default="0"/>
+    <arg name="roll" default="0"/>
+    <arg name="pitch" default="0"/>
+    <arg name="yaw" default="0"/>
+
+    <!-- Launch other relevant files-->
+    <include file="$(find my_fbot)/launch/robot_description.launch"/>
+
+    <!-- World File -->
+    <!--    <arg name="world_file" default="$(find my_fbot)/worlds/empty.world"/>-->
+    <arg name="world_file" default="$(find my_fbot)/worlds/autorace_2020.world"/>
+    <!--    <arg name="world_file" default="$(find my_fbot)/worlds/course.world"/>-->
+
+
+    <!-- Launch Gazebo World -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="use_sim_time" value="true"/>
+        <arg name="debug" value="false"/>
+        <arg name="gui" value="true"/>
+        <arg name="world_name" value="$(arg world_file)"/>
+    </include>
+
+    <!-- Spawn My Robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -param robot_description -model my_fbot
+              -x $(arg x) -y $(arg y) -z $(arg z)
+              -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
+
+    <!--    &lt;!&ndash;launch rviz&ndash;&gt;-->
+    <!--    <node name="rviz" pkg="rviz" type="rviz" respawn="false"-->
+    <!--          args="-d $(find my_fbot)/my_fbot.rviz"/>-->
+
+</launch>
