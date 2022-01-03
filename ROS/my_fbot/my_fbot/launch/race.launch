@@ -1,0 +1,13 @@
+<launch>
+
+    <node name="line_follower_r1" pkg="my_fbot" type="line_follower.py" output="screen">
+        <remap from="/cmd_vel" to="/robot1/cmd_vel"/>
+        <remap from="/camera/rgb/image_raw" to="/robot1/camera/rgb/image_raw"/>
+    </node>
+
+    <node name="line_follower_r2" pkg="my_fbot" type="line_follower.py" output="screen">
+        <remap from="/cmd_vel" to="/robot2/cmd_vel"/>
+        <remap from="/camera/rgb/image_raw" to="/robot2/camera/rgb/image_raw"/>
+    </node>
+
+</launch>

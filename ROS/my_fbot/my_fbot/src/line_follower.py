@@ -8,24 +8,33 @@ from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 from functools import partial
 
+cmd_vel_node = rospy.remap_name("/cmd_vel")
+camera_node = rospy.remap_name("/camera/rgb/image_raw")
+
 bridge = CvBridge()
-cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+cmd_vel_pub = rospy.Publisher(cmd_vel_node, Twist, queue_size=10)
 twist = Twist()
 speed = 0.5
 divider = 100
+max_speed = 0.5
+min_speed = 0.01
+inc_speed = 0.01
+left_limit = 100
+right_limit = -100
 
 
 def img_callback(data, lower_yellow, upper_yellow):
     try:
         global speed
         global divider
+        global max_speed
+        global min_speed
+        global inc_speed
+        global left_limit
+        global right_limit
 
         img = bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-
-        # transform the image and show it
-        # mask = cv2.inRange(img, mins_pcss, maxs_pcss)  # colors mask
-        # img = cv2.bitwise_and(img, img, mask=mask)
 
         mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
@@ -48,32 +57,32 @@ def img_callback(data, lower_yellow, upper_yellow):
             err = cx - w / 2
             # print(err)
 
-            if err > 100 or err < -100:
+            if err > left_limit or err < right_limit:
                 # deceleration
-                if speed > 0.01:
-                    speed -= 0.01
+                if speed > min_speed:
+                    speed -= inc_speed
                     # if divider > 60:
                     #     divider -= 1
                     # elif divider <= 60:
                     #     divider = divider
-                elif speed <= 0.01:
+                elif speed <= min_speed:
                     speed = speed
             else:
                 # acceleration
-                if speed < 0.5:
-                    speed += 0.01
+                if speed < max_speed:
+                    speed += inc_speed
                     # if divider < 100:
                     #     divider += 1
                     # elif divider <= 100:
                     #     divider = divider
-                elif speed >= 0.5:
+                elif speed >= max_speed:
                     speed = speed
 
             if err > 300 or err < -300:
                 speed = 0
 
         else:
-            # stop if lose line and rotate to left
+            # stop if lose line
             speed = 0
             err = -300
 
@@ -83,8 +92,8 @@ def img_callback(data, lower_yellow, upper_yellow):
         cmd_vel_pub.publish(twist)
         print(speed, divider, err)
 
-        cv2.imshow("mask", mask)
-        cv2.imshow("hsv", hsv)
+        # cv2.imshow("mask", mask)
+        # cv2.imshow("hsv", hsv)
         cv2.imshow("image", img)
 
         k = cv2.waitKey(1) & 0xFF
@@ -97,20 +106,20 @@ def main():
     while not rospy.is_shutdown():
         rospy.init_node('line_follower')
 
-        # from color_segment.py
-        ranges_pcss = {"b": {"min": 0, "max": 39}, "g": {"min": 222, "max": 255}, "r": {"min": 215, "max": 255}}
+        # # from color_segment.py
+        # ranges_pcss = {"b": {"min": 0, "max": 39}, "g": {"min": 222, "max": 255}, "r": {"min": 215, "max": 255}}
+        #
+        # # numpy arrays
+        # lower_yellow = np.array([ranges_pcss['b']['min'], ranges_pcss['g']['min'], ranges_pcss['r']['min']])
+        # upper_yellow = np.array([ranges_pcss['b']['max'], ranges_pcss['g']['max'], ranges_pcss['r']['max']])
 
-        # numpy arrays
-        lower_yellow = np.array([ranges_pcss['b']['min'], ranges_pcss['g']['min'], ranges_pcss['r']['min']])
-        upper_yellow = np.array([ranges_pcss['b']['max'], ranges_pcss['g']['max'], ranges_pcss['r']['max']])
+        # yellow line from course.world
+        lower_yellow = np.array([10, 10, 10])
+        upper_yellow = np.array([255, 255, 250])
 
-        # change below lines to map the color you wanted robot to follow
-        # lower_yellow = np.array([10, 10, 10])
-        # upper_yellow = np.array([255, 255, 250])
-
-        img_sub = rospy.Subscriber('/camera/rgb/image_raw', Image, partial(img_callback,
-                                                                           lower_yellow=lower_yellow,
-                                                                           upper_yellow=upper_yellow))
+        img_sub = rospy.Subscriber(camera_node, Image, partial(img_callback,
+                                                               lower_yellow=lower_yellow,
+                                                               upper_yellow=upper_yellow))
 
         rospy.spin()
 
