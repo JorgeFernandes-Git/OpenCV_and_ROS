@@ -23,7 +23,7 @@
 
     <!-- World File -->
     <!--    <arg name="world_file" default="$(find my_fbot)/worlds/empty.world"/>-->
-    <arg name="world_file" default="$(find my_fbot)/worlds/autorace_2020.world"/>
+    <arg name="world_file" default="$(find my_fbot)/worlds/stage_3.world"/>
     <!--    <arg name="world_file" default="$(find my_fbot)/worlds/course.world"/>-->
 
 

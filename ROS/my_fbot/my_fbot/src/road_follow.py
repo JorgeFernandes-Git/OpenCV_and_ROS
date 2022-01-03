@@ -76,7 +76,7 @@ def img_callback(data, lower_yellow, upper_yellow, lower_white, upper_white):
                 elif speed >= 0.5:
                     speed = speed
         else:
-            speed = 0
+            speed = 0.01
             err = 0
 
         # pub the speed in x and z on topic cmd_vel with Twist msg

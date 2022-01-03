@@ -11,8 +11,8 @@
     <!--    <node name="lidar_scan" pkg="my_fbot" type="lidar_scan.py" output="screen"/>-->
 
     <!-- Robot pose -->
-    <arg name="x" default="0.2"/>
-    <arg name="y" default="-1.7"/>
+    <arg name="x" default="0.1"/>
+    <arg name="y" default="-1.79"/>
     <arg name="z" default="0"/>
     <arg name="roll" default="0"/>
     <arg name="pitch" default="0"/>
@@ -23,7 +23,7 @@
 
     <!-- World File -->
     <!--    <arg name="world_file" default="$(find my_fbot)/worlds/empty.world"/>-->
-    <arg name="world_file" default="$(find my_fbot)/worlds/autorace_2020.world"/>
+    <arg name="world_file" default="$(find my_fbot)/worlds/autorace.world"/>
     <!--    <arg name="world_file" default="$(find my_fbot)/worlds/course.world"/>-->
 
 
