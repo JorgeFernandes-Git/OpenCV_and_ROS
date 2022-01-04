@@ -1,0 +1,8 @@
+<launch>
+
+    <node name="road_follow_left_cam" pkg="my_fbot" type="road_follow_left_cam.py" output="screen"/>
+
+    <node name="road_follow_right_cam" pkg="my_fbot" type="road_follow_right_cam.py" output="screen"/>
+
+
+</launch>

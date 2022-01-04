@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <robot name="my_fbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:include filename="$(find my_fbot)/urdf/my_fbot.gazebo"/>
+    <xacro:include filename="$(find my_fbot)/urdf/my_fbot_dual_cam.gazebo"/>
 
     <!--    VARIABLES-->
     <xacro:property name="chassis_height" value=".1"/>
@@ -161,8 +161,8 @@
         </visual>
     </link>
 
-    <!--    CAMERA-->
-    <link name="camera">
+    <!--    CAMERA LEFT-->
+    <link name="camera_left">
         <inertial>
             <mass value="0.1"/>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -183,6 +183,30 @@
             </geometry>
         </visual>
     </link>
+
+    <!--    CAMERA RIGHT-->
+    <link name="camera_right">
+        <inertial>
+            <mass value="0.1"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.03" ixy="0.0" ixz="0.0" iyy="0.03" iyz="0.0" izz="0.03"/>
+        </inertial>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.02"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://computer_vision_pkg/meshes/head.dae" scale=".5 .5 .5"/>
+            </geometry>
+        </visual>
+    </link>
+
 
     <!--    LIDAR-->
     <link name="hokuyo">
@@ -230,22 +254,40 @@
         <dynamics damping="1.0" friction="1.0"/>
     </joint>
 
-    <joint name="camera_joint" type="continuous">
-        <axis xyz="0 1 1"/>
-        <origin xyz="0.09 0 ${chassis_height-0.1}" rpy="0 0 0"/>
+    <joint name="camera_left_joint" type="fixed">
+        <axis xyz="0 0 0"/>
+        <origin xyz="0.08 0.07 ${chassis_height-0.1}" rpy="0 0 0.5"/>
         <parent link="chassis"/>
-        <child link="camera"/>
+        <child link="camera_left"/>
     </joint>
 
-    <transmission name="camera_transmission">
-        <type>transmission_interface/SimpleTransmission</type>
-        <actuator name="$camera_motor">
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-        <joint name="camera_joint">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-        </joint>
-    </transmission>
+<!--    <transmission name="camera_left_transmission">-->
+<!--        <type>transmission_interface/SimpleTransmission</type>-->
+<!--        <actuator name="$camera_motor">-->
+<!--            <mechanicalReduction>1</mechanicalReduction>-->
+<!--        </actuator>-->
+<!--        <joint name="camera_left_joint">-->
+<!--            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>-->
+<!--        </joint>-->
+<!--    </transmission>-->
+    
+        <joint name="camera_right_joint" type="fixed">
+        <axis xyz="0 0 0"/>
+        <origin xyz="0.08 -0.07 ${chassis_height-0.1}" rpy="0 0 -0.5"/>
+        <parent link="chassis"/>
+        <child link="camera_right"/>
+    </joint>
+
+<!--    <transmission name="camera_transmission">-->
+<!--        <type>transmission_interface/SimpleTransmission</type>-->
+<!--        <actuator name="$camera_motor">-->
+<!--            <mechanicalReduction>1</mechanicalReduction>-->
+<!--        </actuator>-->
+<!--        <joint name="camera_joint">-->
+<!--            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>-->
+<!--        </joint>-->
+<!--    </transmission>-->
+
 
     <joint name="hokuyo_joint" type="fixed">
         <origin xyz="-0.05 0 ${chassis_height+0.02}" rpy="0 0 0"/>
