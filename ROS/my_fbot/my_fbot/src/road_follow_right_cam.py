@@ -61,20 +61,20 @@ def img_callback_right(data, lower_white, upper_white):
             err = cx_white - (3 * w / 4)
             # print(err)
 
-            if err < -100:
-                # deceleration
-                if speed > 0.01:
-                    speed -= 0.01
-                elif speed <= 0.01:
-                    speed = speed
-            else:
-                # acceleration
-                if speed < 0.5:
-                    speed += 0.01
-                elif speed >= 0.5:
-                    speed = speed
-
-            publisher(speed, err)
+            if err < -50:
+                publisher(speed, err)
+                # print(speed, err)
+            #     # deceleration
+            #     if speed > 0.01:
+            #         speed -= 0.01
+            #     elif speed <= 0.01:
+            #         speed = speed
+            # else:
+            #     # acceleration
+            #     if speed < 0.5:
+            #         speed += 0.01
+            #     elif speed >= 0.5:
+            #         speed = speed
 
         cv2.imshow("mask_white", mask_white)
         # # cv2.imshow("hsv", hsv)
