@@ -179,7 +179,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://computer_vision_pkg/meshes/head.dae" scale=".5 .5 .5"/>
+                <mesh filename="package://my_fbot/meshes/head.dae" scale=".5 .5 .5"/>
             </geometry>
         </visual>
     </link>

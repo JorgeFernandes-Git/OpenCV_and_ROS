@@ -17,6 +17,15 @@ msg.ranges[360] position in front of the robot
 """
 
 
+# def clbk_laser(msg):
+#     regions = {
+#         'right':  min(min(msg.ranges[0:143]), 10),
+#         'fright': min(min(msg.ranges[144:287]), 10),
+#         'front':  min(min(msg.ranges[288:431]), 10),
+#         'fleft':  min(min(msg.ranges[432:575]), 10),
+#         'left':   min(min(msg.ranges[576:713]), 10),
+#     }
+
 def publisher(speed, turn):
     twist.linear.x = speed
     twist.angular.z = -float(turn) / 100
@@ -35,9 +44,9 @@ def callback_msg_received(msg):
     spd_min = 0
     spd_max = 0.5
 
-    obj_dist_min = 0.5
-    angle_min = 160
-    angle_max = 360
+    obj_dist_min = 0.2
+    angle_min = 10
+    angle_max = 710
 
     for range in msg.ranges:
         if range < obj_dist_min:
@@ -50,6 +59,7 @@ def callback_msg_received(msg):
     #         speed = spd_min
     #         turn = err_max
 
+    print(len(msg.ranges))
     print(speed, turn)
     publisher(speed=speed, turn=turn)
 
