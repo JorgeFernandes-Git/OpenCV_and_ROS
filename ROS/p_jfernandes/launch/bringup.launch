@@ -1,0 +1,8 @@
+<launch>
+
+    <param name="robot_description"
+           command="$(find xacro)/xacro --inorder $(find p_jfernandes)/urdf/p_jfernandes.urdf.xacro"/>
+
+    <include file="$(find p_jfernandes)/launch/spawn.launch"/>
+
+</launch>
