@@ -1,4 +1,5 @@
 <launch>
+
     <arg name="model" default="$(find p_jfernandes)/urdf/p_jfernandes.urdf.xacro"/>
 
     <param name="robot_description"
@@ -14,3 +15,4 @@
           output="screen"/>
 
     <include file="$(find p_jfernandes)/launch/fnr_spawn.launch"/>
+</launch>
