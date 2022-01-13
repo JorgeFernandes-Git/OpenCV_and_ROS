@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
-<robot name="p_jfernandes_sim" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="green_turtlebot3_sim" xmlns:xacro="http://ros.org/wiki/xacro">
     <xacro:arg name="laser_visual" default="false"/>
     <xacro:arg name="camera_visual" default="false"/>
     <xacro:arg name="imu_visual" default="false"/>
+
+    <!--    robot main color-->
+    <xacro:arg name="main_color" default="Green"/>
+
 
     <gazebo reference="base_link">
         <material>Gazebo/DarkGrey</material>
@@ -13,7 +17,7 @@
     </gazebo>
 
     <gazebo reference="top">
-        <material>Gazebo/Blue</material>
+        <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
 
@@ -25,7 +29,7 @@
         <minDepth>0.001</minDepth>
         <maxVel>0.1</maxVel>
         <fdir1>1 0 0</fdir1>
-        <material>Gazebo/Blue</material>
+        <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
     <gazebo reference="wheel_right_link">
@@ -36,7 +40,7 @@
         <minDepth>0.001</minDepth>
         <maxVel>0.1</maxVel>
         <fdir1>1 0 0</fdir1>
-        <material>Gazebo/Blue</material>
+        <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
     <gazebo reference="caster_back_right_link">
@@ -69,7 +73,7 @@
 
     <gazebo>
         <plugin name="turtlebot3_waffle_pi_controller" filename="libgazebo_ros_diff_drive.so">
-            <commandTopic>p_jfernandes/cmd_vel</commandTopic>
+            <commandTopic>green_turtlebot3/cmd_vel</commandTopic>
             <odometryTopic>odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
             <odometrySource>world</odometrySource>
@@ -96,8 +100,8 @@
             <alwaysOn>true</alwaysOn>
             <bodyName>imu_link</bodyName>
             <frameName>imu_link</frameName>
-            <topicName>p_jfernandes/imu</topicName>
-            <serviceName>p_jfernandes/imu_service</serviceName>
+            <topicName>green_turtlebot3/imu</topicName>
+            <serviceName>green_turtlebot3/imu_service</serviceName>
             <gaussianNoise>0.0</gaussianNoise>
             <updateRate>0</updateRate>
             <imu>
@@ -147,7 +151,7 @@
                 </noise>
             </ray>
             <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
-                <topicName>p_jfernandes/scan</topicName>
+                <topicName>green_turtlebot3/scan</topicName>
                 <frameName>base_scan</frameName>
             </plugin>
         </sensor>
@@ -163,7 +167,7 @@
                 <image>
                     <!--                    <width>640</width>-->
                     <!--                    <height>480</height>-->
-                    <width>1000</width>
+                    <width>1200</width>
                     <height>800</height>
                     <format>R8G8B8</format>
                 </image>
@@ -175,7 +179,7 @@
             <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
                 <alwaysOn>true</alwaysOn>
                 <updateRate>30.0</updateRate>
-                <cameraName>p_jfernandes/camera</cameraName>
+                <cameraName>green_turtlebot3/camera</cameraName>
                 <frameName>camera_rgb_optical_frame</frameName>
                 <imageTopicName>rgb/image_raw</imageTopicName>
                 <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>

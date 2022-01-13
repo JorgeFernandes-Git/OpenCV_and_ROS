@@ -6,13 +6,13 @@
            command="$(find xacro)/xacro --inorder '$(find p_jfernandes)/urdf/p_jfernandes.urdf.xacro'"/>
 
     <!-- Send fake joint values-->
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <node name="p_jfernandes_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
         <param name="use_gui" value="false"/>
     </node>
 
     <!-- Send robot states to tf -->
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false"
+    <node name="p_jfernandes_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false"
           output="screen"/>
 
-    <include file="$(find p_jfernandes)/launch/fnr_spawn.launch"/>
+    <include file="$(find p_jfernandes)/launch/spawn.launch"/>
 </launch>

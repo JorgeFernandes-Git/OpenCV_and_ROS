@@ -6,14 +6,15 @@
            command="$(find xacro)/xacro --inorder '$(find red_turtlebot3)/urdf/red_turtlebot3.urdf.xacro'"/>
 
     <!-- Send fake joint values-->
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <node name="red_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
         <param name="use_gui" value="false"/>
     </node>
 
     <!-- Send robot states to tf -->
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false"
+    <node name="red_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false"
           output="screen"/>
 
-    <include file="$(find red_turtlebot3)/launch/fnr_spawn.launch"/>
+    <!--    include spawn the robot -->
+    <include file="$(find red_turtlebot3)/launch/spawn.launch"/>
 
 </launch>

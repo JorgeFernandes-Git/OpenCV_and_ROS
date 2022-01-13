@@ -1,0 +1,20 @@
+<launch>
+
+    <arg name="model" default="$(find green_turtlebot3)/urdf/green_turtlebot3.urdf.xacro"/>
+
+    <param name="robot_description"
+           command="$(find xacro)/xacro --inorder '$(find green_turtlebot3)/urdf/green_turtlebot3.urdf.xacro'"/>
+
+    <!-- Send fake joint values-->
+    <node name="green_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="use_gui" value="false"/>
+    </node>
+
+    <!-- Send robot states to tf -->
+    <node name="green_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false"
+          output="screen"/>
+
+    <!--    include spawn the robot -->
+    <include file="$(find green_turtlebot3)/launch/spawn.launch"/>
+
+</launch>
