@@ -16,7 +16,7 @@ def onTrackbar(threshold):
 
 def main():
     # capture = cv2.VideoCapture(0)  # connect to webcam
-    image = cv2.imread("fnr_line.jpg")
+    image = cv2.imread("cars_colors.jpg")
     image = cv2.resize(image, (850, 535))  # resize the capture window
     # image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     window_frame = "frame"
