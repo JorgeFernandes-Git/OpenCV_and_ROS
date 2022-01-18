@@ -6,21 +6,23 @@
 
     <xacro:arg name="main_color" default="Blue"/>
 
+    <xacro:property name="robot_name" value="p_jfernandes/"/>
 
-    <gazebo reference="base_link">
+
+    <gazebo reference="${robot_name}base_link">
         <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
-    <gazebo reference="stem">
+    <gazebo reference="${robot_name}stem">
         <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
-    <gazebo reference="top">
+    <gazebo reference="${robot_name}top">
         <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
 
-    <gazebo reference="wheel_left_link">
+    <gazebo reference="${robot_name}wheel_left_link">
         <mu1>0.1</mu1>
         <mu2>0.1</mu2>
         <kp>500000.0</kp>
@@ -31,7 +33,7 @@
         <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
-    <gazebo reference="wheel_right_link">
+    <gazebo reference="${robot_name}wheel_right_link">
         <mu1>0.1</mu1>
         <mu2>0.1</mu2>
         <kp>500000.0</kp>
@@ -42,7 +44,7 @@
         <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
-    <gazebo reference="caster_back_right_link">
+    <gazebo reference="${robot_name}caster_back_right_link">
         <mu1>0.1</mu1>
         <mu2>0.1</mu2>
         <kp>1000000.0</kp>
@@ -52,7 +54,7 @@
         <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
-    <gazebo reference="caster_back_left_link">
+    <gazebo reference="${robot_name}caster_back_left_link">
         <mu1>0.1</mu1>
         <mu2>0.1</mu2>
         <kp>1000000.0</kp>
@@ -62,7 +64,7 @@
         <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
-    <gazebo reference="imu_link">
+    <gazebo reference="${robot_name}imu_link">
         <sensor type="imu" name="imu">
             <always_on>true</always_on>
             <visualize>$(arg imu_visual)</visualize>
@@ -72,12 +74,12 @@
 
     <gazebo>
         <plugin name="turtlebot3_waffle_pi_controller" filename="libgazebo_ros_diff_drive.so">
-            <commandTopic>p_jfernandes/cmd_vel</commandTopic>
+            <commandTopic>${robot_name}cmd_vel</commandTopic>
             <odometryTopic>odom</odometryTopic>
-            <odometryFrame>odom</odometryFrame>
+            <odometryFrame>${robot_name}odom</odometryFrame>
             <odometrySource>world</odometrySource>
             <publishOdomTF>true</publishOdomTF>
-            <robotBaseFrame>base_footprint</robotBaseFrame>
+            <robotBaseFrame>${robot_name}base_footprint</robotBaseFrame>
             <publishWheelTF>false</publishWheelTF>
             <publishTf>true</publishTf>
             <publishWheelJointState>true</publishWheelJointState>
@@ -97,10 +99,10 @@
     <gazebo>
         <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
             <alwaysOn>true</alwaysOn>
-            <bodyName>imu_link</bodyName>
-            <frameName>imu_link</frameName>
-            <topicName>p_jfernandes/imu</topicName>
-            <serviceName>p_jfernandes/imu_service</serviceName>
+            <bodyName>${robot_name}imu_link</bodyName>
+            <frameName>${robot_name}imu_link</frameName>
+            <topicName>${robot_name}imu</topicName>
+            <serviceName>${robot_name}imu_service</serviceName>
             <gaussianNoise>0.0</gaussianNoise>
             <updateRate>0</updateRate>
             <imu>
@@ -123,7 +125,7 @@
         </plugin>
     </gazebo>
 
-    <gazebo reference="base_scan">
+    <gazebo reference="${robot_name}base_scan">
         <material>Gazebo/FlatBlack</material>
         <sensor type="ray" name="lds_lfcd_sensor">
             <pose>0 0 0 0 0 0</pose>
@@ -150,14 +152,14 @@
                 </noise>
             </ray>
             <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
-                <topicName>p_jfernandes/scan</topicName>
-                <frameName>base_scan</frameName>
+                <topicName>${robot_name}scan</topicName>
+                <frameName>${robot_name}base_scan</frameName>
             </plugin>
         </sensor>
     </gazebo>
 
     <!--link : https://www.raspberrypi.org/documentation/hardware/camera/-->
-    <gazebo reference="camera_rgb_frame">
+    <gazebo reference="${robot_name}camera_rgb_frame">
         <sensor type="camera" name="Pi Camera">
             <always_on>true</always_on>
             <visualize>$(arg camera_visual)</visualize>
@@ -178,8 +180,8 @@
             <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
                 <alwaysOn>true</alwaysOn>
                 <updateRate>30.0</updateRate>
-                <cameraName>p_jfernandes/camera</cameraName>
-                <frameName>camera_rgb_optical_frame</frameName>
+                <cameraName>${robot_name}camera</cameraName>
+                <frameName>${robot_name}camera_rgb_optical_frame</frameName>
                 <imageTopicName>rgb/image_raw</imageTopicName>
                 <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
                 <hackBaseline>0.07</hackBaseline>
