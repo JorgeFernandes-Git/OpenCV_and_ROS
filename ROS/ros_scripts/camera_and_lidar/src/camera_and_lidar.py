@@ -44,8 +44,6 @@ class Server:
     def overlap(self):
         if self.image_data is not None and self.laser_data is not None:
             try:
-                speed = 0
-                turn = 0
 
                 # ***************** lidar code **************
                 obj_near = False
@@ -54,8 +52,10 @@ class Server:
                 for range in self.laser_data.ranges:
                     if range < 0.2:
                         speed = 0
-                        turn = 0
+                        turn = 350
                         obj_near = True
+                        publisher(speed=speed, turn=turn)
+
                     else:
                         obj_near = False
                         turn = 350
@@ -102,7 +102,9 @@ class Server:
                         threshold = cx_to_catch - width / 2
 
                         turn = threshold
-                        speed = 1
+                        speed = 0.3
+
+                        publisher(speed=speed, turn=turn)
 
                     # ****************** to run *************************
                     if M_to_run['m00'] > 0:
@@ -110,14 +112,18 @@ class Server:
                         cy_to_run = int(M_to_run['m01'] / M_to_run['m00'])
                         cv2.circle(img, (cx_to_run, cy_to_run), 20, (255, 0, 0), -1)
 
+                # resize
+                img = cv2.resize(img, (300, 300))
+                mask_to_catch = cv2.resize(mask_to_catch, (300, 300))
+                mask_to_run = cv2.resize(mask_to_run, (300, 300))
+
                 # show images
                 cv2.imshow("mask_to_catch", mask_to_catch)
                 cv2.imshow("mask_to_run", mask_to_run)
                 cv2.imshow("image", img)
 
+                print(obj_near)
                 k = cv2.waitKey(1) & 0xFF
-
-                publisher(speed=speed, turn=turn)
 
             except CvBridgeError as e:
                 print(e)
