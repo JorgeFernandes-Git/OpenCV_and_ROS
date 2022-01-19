@@ -13,13 +13,13 @@
         <material>Gazebo/$(arg main_color)</material>
     </gazebo>
 
-    <gazebo reference="${robot_name}stem">
-        <material>Gazebo/$(arg main_color)</material>
-    </gazebo>
+    <!--    <gazebo reference="${robot_name}stem">-->
+    <!--        <material>Gazebo/$(arg main_color)</material>-->
+    <!--    </gazebo>-->
 
-    <gazebo reference="${robot_name}top">
-        <material>Gazebo/$(arg main_color)</material>
-    </gazebo>
+    <!--    <gazebo reference="${robot_name}top">-->
+    <!--        <material>Gazebo/$(arg main_color)</material>-->
+    <!--    </gazebo>-->
 
 
     <gazebo reference="${robot_name}wheel_left_link">
@@ -79,6 +79,7 @@
             <odometryFrame>${robot_name}odom</odometryFrame>
             <odometrySource>world</odometrySource>
             <publishOdomTF>true</publishOdomTF>
+            <!--            <publishOdomTF>false</publishOdomTF>-->
             <robotBaseFrame>${robot_name}base_footprint</robotBaseFrame>
             <publishWheelTF>false</publishWheelTF>
             <publishTf>true</publishTf>

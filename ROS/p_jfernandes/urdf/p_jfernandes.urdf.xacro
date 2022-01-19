@@ -41,54 +41,54 @@
         </inertial>
     </link>
 
-    <!--    add blue element   ********************** -->
-    <link name="${robot_name}stem">
-        <visual>
-            <origin xyz="0 0 0.0" rpy="0 0 0"/>
-            <geometry>
-                <cylinder length="0.1" radius="0.005"/>
-            </geometry>
-            <material name="dark"/>
-        </visual>
+<!--    &lt;!&ndash;    add blue element   ********************** &ndash;&gt;-->
+<!--    <link name="${robot_name}stem">-->
+<!--        <visual>-->
+<!--            <origin xyz="0 0 0.0" rpy="0 0 0"/>-->
+<!--            <geometry>-->
+<!--                <cylinder length="0.1" radius="0.005"/>-->
+<!--            </geometry>-->
+<!--            <material name="dark"/>-->
+<!--        </visual>-->
 
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <cylinder length="0.1" radius="0.005"/>
-            </geometry>
-        </collision>
-    </link>
+<!--        <collision>-->
+<!--            <origin xyz="0 0 0" rpy="0 0 0"/>-->
+<!--            <geometry>-->
+<!--                <cylinder length="0.1" radius="0.005"/>-->
+<!--            </geometry>-->
+<!--        </collision>-->
+<!--    </link>-->
 
-    <joint name="stem_joint" type="fixed">
-        <parent link="${robot_name}base_link"/>
-        <child link="${robot_name}stem"/>
-        <origin xyz="-0.16 0.07 0.14" rpy="0 0 0"/>
-    </joint>
+<!--    <joint name="stem_joint" type="fixed">-->
+<!--        <parent link="${robot_name}base_link"/>-->
+<!--        <child link="${robot_name}stem"/>-->
+<!--        <origin xyz="-0.16 0.07 0.14" rpy="0 0 0"/>-->
+<!--    </joint>-->
 
-    <link name="${robot_name}top">
-        <visual>
-            <origin xyz="0 0 0.0" rpy="0 0 0"/>
-            <geometry>
-                <cylinder length="0.05" radius="0.05"/>
-            </geometry>
-            <material name="dark"/>
-        </visual>
+<!--    <link name="${robot_name}top">-->
+<!--        <visual>-->
+<!--            <origin xyz="0 0 0.0" rpy="0 0 0"/>-->
+<!--            <geometry>-->
+<!--                <cylinder length="0.05" radius="0.05"/>-->
+<!--            </geometry>-->
+<!--            <material name="dark"/>-->
+<!--        </visual>-->
 
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <cylinder length="${top_length}" radius="0.04"/>
-            </geometry>
-        </collision>
-    </link>
+<!--        <collision>-->
+<!--            <origin xyz="0 0 0" rpy="0 0 0"/>-->
+<!--            <geometry>-->
+<!--                <cylinder length="${top_length}" radius="0.04"/>-->
+<!--            </geometry>-->
+<!--        </collision>-->
+<!--    </link>-->
 
-    <joint name="top_joint" type="fixed">
-        <parent link="${robot_name}base_link"/>
-        <child link="${robot_name}top"/>
-        <origin xyz="-0.16 0.07 0.19" rpy="0 0 0"/>
-    </joint>
+<!--    <joint name="top_joint" type="fixed">-->
+<!--        <parent link="${robot_name}base_link"/>-->
+<!--        <child link="${robot_name}top"/>-->
+<!--        <origin xyz="-0.16 0.07 0.19" rpy="0 0 0"/>-->
+<!--    </joint>-->
 
-    <!--    ************************************************-->
+<!--    &lt;!&ndash;    ************************************************&ndash;&gt;-->
 
     <joint name="wheel_left_joint" type="continuous">
         <parent link="${robot_name}base_link"/>
