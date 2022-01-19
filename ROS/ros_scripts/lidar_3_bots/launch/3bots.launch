@@ -1,0 +1,19 @@
+<launch>
+
+    <node name="p_jfernandes_lidar_scan" pkg="lidar_3_bots" type="lidar_scan.py" output="screen">
+        <remap from="p_jfernandes/cmd_vel" to="p_jfernandes/cmd_vel"/>
+        <remap from="p_jfernandes/scan" to="p_jfernandes/scan"/>
+    </node>
+
+    <node name="red_lidar_scan" pkg="lidar_3_bots" type="lidar_scan.py" output="screen">
+        <remap from="p_jfernandes/cmd_vel" to="red/cmd_vel"/>
+        <remap from="p_jfernandes/scan" to="red/scan"/>
+    </node>
+
+    <node name="green_lidar_scan" pkg="lidar_3_bots" type="lidar_scan.py" output="screen">
+        <remap from="p_jfernandes/cmd_vel" to="green/cmd_vel"/>
+        <remap from="p_jfernandes/scan" to="green/scan"/>
+    </node>
+
+
+</launch>
