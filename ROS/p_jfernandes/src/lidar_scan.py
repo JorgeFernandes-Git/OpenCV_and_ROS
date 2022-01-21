@@ -2,7 +2,7 @@
 
 import rospy
 from sensor_msgs.msg import LaserScan
-from geometry_msgs.msg import Point, Twist
+from geometry_msgs.msg import Twist
 
 cmd_vel_node = rospy.remap_name("p_jfernandes/cmd_vel")
 cmd_vel_pub = rospy.Publisher(cmd_vel_node, Twist, queue_size=10)

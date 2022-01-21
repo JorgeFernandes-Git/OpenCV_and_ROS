@@ -59,10 +59,10 @@ def callback_msg_received(msg):
     # only cover a range
     for idx in range(angle_min, angle_max):
         if msg.ranges[idx] < obj_dist_min:
-            speed = -0.1
+            speed = -0.2
             turn = err_max
 
-            # if msg.ranges[idx-1] < msg.ranges[idx]:
+            # if msg.ranges[idx-5] < msg.ranges[idx]:
             #     turn = err_max
             # else:
             #     turn = -err_max
