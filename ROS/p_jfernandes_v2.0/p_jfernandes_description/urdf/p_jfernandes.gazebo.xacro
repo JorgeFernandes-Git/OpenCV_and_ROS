@@ -8,13 +8,17 @@
         <material>Gazebo/${player_color}</material>
     </gazebo>
 
-    <!--    <gazebo reference="stem">-->
-    <!--        <material>Gazebo/$(arg main_color)</material>-->
-    <!--    </gazebo>-->
+    <gazebo reference="stem_left">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
 
-    <!--    <gazebo reference="top">-->
-    <!--        <material>Gazebo/$(arg main_color)</material>-->
-    <!--    </gazebo>-->
+    <gazebo reference="stem_right">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <gazebo reference="spoiler">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
 
 
     <gazebo reference="wheel_left_link">
@@ -25,7 +29,7 @@
         <minDepth>0.001</minDepth>
         <maxVel>0.1</maxVel>
         <fdir1>1 0 0</fdir1>
-        <material>Gazebo/FlatBlack</material>
+        <material>Gazebo/DarkGrey</material>
     </gazebo>
 
     <gazebo reference="wheel_right_link">
@@ -36,7 +40,7 @@
         <minDepth>0.001</minDepth>
         <maxVel>0.1</maxVel>
         <fdir1>1 0 0</fdir1>
-        <material>Gazebo/FlatBlack</material>
+        <material>Gazebo/DarkGrey</material>
     </gazebo>
 
     <gazebo reference="caster_back_right_link">
@@ -122,7 +126,7 @@
     </gazebo>
 
     <gazebo reference="base_scan">
-        <material>Gazebo/FlatBlack</material>
+        <material>Gazebo/DarkGrey</material>
         <sensor type="ray" name="lds_lfcd_sensor">
             <pose>0 0 0 0 0 0</pose>
             <visualize>$(arg laser_visual)</visualize>
