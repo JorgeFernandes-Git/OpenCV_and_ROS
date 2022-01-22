@@ -9,18 +9,22 @@ from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import PointCloud2, Image
 
 # publisher
-cmd_vel_node = rospy.remap_name("red_turtlebot3/cmd_vel")
+cmd_vel_node = rospy.remap_name("p_jfernandes/cmd_vel")
 cmd_vel_pub = rospy.Publisher(cmd_vel_node, Twist, queue_size=10)
 
 # camera node
-camera_node = rospy.remap_name("red_turtlebot3/camera/rgb/image_raw")
+camera_node = rospy.remap_name("p_jfernandes/camera/rgb/image_raw")
 
 # lidar node
-lidar_node = rospy.remap_name("red_turtlebot3/scan")
+lidar_node = rospy.remap_name("p_jfernandes/scan")
 
 # objects
 bridge = CvBridge()
 twist = Twist()
+
+# variables
+speed = 0
+turn = 550
 
 
 def publisher(speed, turn):
@@ -45,28 +49,31 @@ class Server:
         if self.image_data is not None and self.laser_data is not None:
             try:
 
-                # ***************** lidar code **************
-                obj_near = False
-                # print(len(self.laser_data.ranges))
+                global speed
+                global turn
 
-                for range in self.laser_data.ranges:
-                    if range < 0.2:
-                        speed = 0
-                        turn = 350
-                        obj_near = True
-                        publisher(speed=speed, turn=turn)
-
-                    else:
-                        obj_near = False
-                        turn = 350
+                # # ***************** lidar code **************
+                # obj_near = False
+                # # print(len(self.laser_data.ranges))
+                #
+                # for range in self.laser_data.ranges:
+                #     if range < 0.2:
+                #         speed = 0
+                #         turn = 350
+                #         obj_near = True
+                #         publisher(speed=speed, turn=turn)
+                #
+                #     else:
+                #         obj_near = False
+                #         turn = 350
 
                 # ***************** camera code *************
                 img = bridge.imgmsg_to_cv2(self.image_data, desired_encoding='bgr8')
                 # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-                # from color_segment.py blue and green
-                ranges_to_catch = {"b": {"min": 185, "max": 255}, "g": {"min": 0, "max": 255},
-                                   "r": {"min": 0, "max": 255}}
+                # from color_segment.py red and green
+                ranges_to_catch = {"b": {"min": 0, "max": 255}, "g": {"min": 0, "max": 255},
+                                   "r": {"min": 184, "max": 255}}
                 ranges_to_run = {"b": {"min": 0, "max": 255}, "g": {"min": 185, "max": 255},
                                  "r": {"min": 0, "max": 255}}
 
@@ -91,38 +98,52 @@ class Server:
                 M_to_catch = cv2.moments(mask_to_catch)
                 M_to_run = cv2.moments(mask_to_run)
 
-                if not obj_near:
-                    # ****************** to catch *************************
-                    if M_to_catch['m00'] > 0:
-                        cx_to_catch = int(M_to_catch['m10'] / M_to_catch['m00'])
-                        cy_to_catch = int(M_to_catch['m01'] / M_to_catch['m00'])
-                        cv2.circle(img, (cx_to_catch, cy_to_catch), 20, (0, 0, 255), -1)
+                # if not obj_near:
+                # ****************** to catch *************************
+                if M_to_catch['m00'] > 0:
+                    cx_to_catch = int(M_to_catch['m10'] / M_to_catch['m00'])
+                    cy_to_catch = int(M_to_catch['m01'] / M_to_catch['m00'])
+                    cv2.circle(img, (cx_to_catch, cy_to_catch), 20, (0, 0, 255), -1)
 
-                        # find center
-                        threshold = cx_to_catch - width / 2
+                    # find center
+                    threshold = cx_to_catch - width / 2
 
-                        turn = threshold
-                        speed = 0.3
+                    turn = threshold
+                    # speed = 0.3
 
-                        publisher(speed=speed, turn=turn)
+                    if abs(turn) < 150:  # accelerate
+                        if speed < 1.0:
+                            speed += 0.1
+                    else:
+                        if speed > 0.3:  # decelerate
+                            speed -= 0.05
+                        else:
+                            speed = 0.3
 
-                    # ****************** to run *************************
-                    if M_to_run['m00'] > 0:
-                        cx_to_run = int(M_to_run['m10'] / M_to_run['m00'])
-                        cy_to_run = int(M_to_run['m01'] / M_to_run['m00'])
-                        cv2.circle(img, (cx_to_run, cy_to_run), 20, (255, 0, 0), -1)
+                else:  # not detected target, keep rotating
+                    speed = 0
+                    turn = 650
+
+                # ****************** to run *************************
+                if M_to_run['m00'] > 0:
+                    cx_to_run = int(M_to_run['m10'] / M_to_run['m00'])
+                    cy_to_run = int(M_to_run['m01'] / M_to_run['m00'])
+                    cv2.circle(img, (cx_to_run, cy_to_run), 20, (255, 0, 0), -1)
 
                 # resize
-                img = cv2.resize(img, (300, 300))
-                mask_to_catch = cv2.resize(mask_to_catch, (300, 300))
-                mask_to_run = cv2.resize(mask_to_run, (300, 300))
+                # img = cv2.resize(img, (300, 300))
+                # mask_to_catch = cv2.resize(mask_to_catch, (300, 300))
+                # mask_to_run = cv2.resize(mask_to_run, (300, 300))
 
                 # show images
-                cv2.imshow("mask_to_catch", mask_to_catch)
-                cv2.imshow("mask_to_run", mask_to_run)
-                cv2.imshow("image", img)
+                # cv2.imshow("mask_to_catch", mask_to_catch)
+                # cv2.imshow("mask_to_run", mask_to_run)
+                # cv2.imshow("image", img)
 
-                print(obj_near)
+                print(speed, turn)
+                publisher(speed=speed, turn=turn)
+
+                # print(obj_near)
                 k = cv2.waitKey(1) & 0xFF
 
             except CvBridgeError as e:
