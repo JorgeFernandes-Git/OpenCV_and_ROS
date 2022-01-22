@@ -134,6 +134,7 @@
             <ray>
                 <scan>
                     <horizontal>
+                        <!--                        number of lidar points per rotation, here = 360-->
                         <samples>360</samples>
                         <resolution>1</resolution>
                         <min_angle>0.0</min_angle>
@@ -168,8 +169,8 @@
                 <image>
                     <!--                    <width>640</width>-->
                     <!--                    <height>480</height>-->
-                    <width>1000</width>
-                    <height>800</height>
+                    <width>1200</width>
+                    <height>600</height>
                     <format>R8G8B8</format>
                 </image>
                 <clip>
