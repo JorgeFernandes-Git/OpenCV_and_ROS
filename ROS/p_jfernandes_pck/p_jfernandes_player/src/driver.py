@@ -68,7 +68,7 @@ class Driver:
 
         # print(goal_present_time)
 
-        target_frame = "p_jfernandes/base_link"
+        target_frame = "p_jfernandes/base_link"  # frame to transform final position
         try:
             goal_in_base_link = self.tf_buffer.transform(goal_present_time, target_frame, rospy.Duration(1))
             # print(goal_in_base_link)
@@ -78,6 +78,7 @@ class Driver:
             self.angle = 0
             return self.speed, self.angle
 
+        # final x, y and orientation coordinates converted to base link
         x = goal_in_base_link.pose.position.x
         y = goal_in_base_link.pose.position.y
         orientation = goal_in_base_link.pose.orientation.z
@@ -88,12 +89,12 @@ class Driver:
         self.distance_to_goal = math.sqrt(x**2 + y**2)
 
         # calculate angle and speed based on distance
-        if abs(orientation) > 0.5:  # stay still until orientation match
+        if abs(orientation) > 0.5:  # stay still until orientation are similar
             self.angle = math.atan2(y, x)
             self.speed = 0
         else:
             self.angle = math.atan2(y, x)
-            self.speed = 0.5 * self.distance_to_goal
+            self.speed = 0.5 * self.distance_to_goal  # decelerate based on distance to goal
 
         self.speed = min(self.speed, speed_max)
         self.speed = max(self.speed, speed_min)
