@@ -47,6 +47,7 @@ class Driver:
 
     def drive_straight(self, goal, speed_min=0.1, speed_max=0.9):
 
+        # for a copy of the goal to keep goal in buffer and don't lose actual position over time
         goal_present_time = copy.deepcopy(goal)
         goal_present_time.header.stamp = rospy.Time.now()
 
