@@ -82,7 +82,7 @@ class Driver:
         y = goal_in_base_link.pose.position.y
         orientation = goal_in_base_link.pose.orientation.z
 
-        print(orientation)
+        # print(orientation)
 
         # calculate distance to goal
         self.distance_to_goal = math.sqrt(x**2 + y**2)
@@ -102,7 +102,7 @@ class Driver:
 
 
 def main():
-    rospy.init_node("move_to_goal")
+    rospy.init_node("driver")
     driver = Driver()
     rospy.spin()
 
