@@ -4,10 +4,11 @@ import math
 
 import rospy
 import tf2_ros
+from tf2_geometry_msgs import PointStamped
 from geometry_msgs.msg import PoseStamped, Twist
 
 # topics
-cmd_vel_node = rospy.remap_name("p_jfernandes/cmd_vel")
+cmd_vel_node = rospy.remap_name("/p_jfernandes/cmd_vel")
 pose_stamped_node = rospy.remap_name("/move_base_simple/goal")
 
 
@@ -17,15 +18,16 @@ class Driver:
         self.speed = 0
         self.angle = 0
 
-        self.goal = PoseStamped()
+        self.goal = PointStamped()
         self.goal_active = False
 
         self.tf_buffer = tf2_ros.Buffer()
         self.listener = tf2_ros.TransformListener(self.tf_buffer)
 
         self.pub = rospy.Publisher(cmd_vel_node, Twist, queue_size=10)
-        self.timer = rospy.Timer(rospy.Duration(0.1), self.send_command_callback)
         self.sub = rospy.Subscriber(pose_stamped_node, PoseStamped, self.goal_callback)
+
+        self.timer = rospy.Timer(rospy.Duration(0.1), self.send_command_callback)
 
     def goal_callback(self, goal_msg):
         self.goal = goal_msg
@@ -48,11 +50,14 @@ class Driver:
         goal_present_time = copy.deepcopy(goal)
         goal_present_time.header.stamp = rospy.Time.now()
 
-        target_frame = "/p_jfernandes/base_link"
+        # print(goal_present_time)
+
+        target_frame = "p_jfernandes/base_link"
         try:
-            goal_in_base_link = self.tf_buffer.transform(goal, target_frame, rospy.Duration(1))
+            goal_in_base_link = self.tf_buffer.transform(goal_present_time, target_frame, rospy.Duration(1))
+            # print(goal_in_base_link)
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-            rospy.logwarn(f'Could not transform goal from {goal.header.frame_id} to {target_frame}')
+            rospy.logwarn(f'Could not transform goal from {goal_present_time.header.frame_id} to {target_frame}')
             self.speed = 0
             self.angle = 0
             return self.speed, self.angle
@@ -63,7 +68,7 @@ class Driver:
         self.angle = math.atan2(y, x)
 
         self.speed = min(self.speed, speed_max)
-        self.speed = min(self.speed, speed_min)
+        self.speed = max(self.speed, speed_min)
 
         return self.speed, self.angle
 
