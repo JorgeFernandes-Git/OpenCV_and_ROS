@@ -67,6 +67,7 @@ class Driver:
         y = goal_in_base_link.pose.position.y
 
         self.angle = math.atan2(y, x)
+        self.speed = 2.5  # define speed over speed_max
 
         self.speed = min(self.speed, speed_max)
         self.speed = max(self.speed, speed_min)
