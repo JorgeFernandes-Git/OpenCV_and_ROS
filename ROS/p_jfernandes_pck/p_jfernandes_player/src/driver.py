@@ -88,8 +88,7 @@ class Driver:
         self.distance_to_goal = math.sqrt(x**2 + y**2)
 
         # calculate angle and speed based on distance
-
-        if abs(orientation) > 0.5:
+        if abs(orientation) > 0.5:  # stay still until orientation match
             self.angle = math.atan2(y, x)
             self.speed = 0
         else:
