@@ -1,6 +1,7 @@
 local_costmap:
   global_frame: p_jfernandes/odom
-  robot_base_frame: p_jfernandes/base_footprint
+#  robot_base_frame: p_jfernandes/base_footprint
+  robot_base_frame: base_footprint
 
   update_frequency: 10.0
   publish_frequency: 10.0

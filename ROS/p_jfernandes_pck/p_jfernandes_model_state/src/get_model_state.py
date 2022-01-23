@@ -10,7 +10,7 @@ robot_name = rospy.remap_name("Red")
 rate_hz = 1.0
 
 # nodes
-pose_stamped_node = rospy.remap_name("/move_base_simple/goal")
+pose_stamped_node = rospy.remap_name("/p_jfernandes/move_base_simple/goal")
 get_model_state = rospy.remap_name("/gazebo/get_model_state")
 
 
