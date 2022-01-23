@@ -55,12 +55,12 @@
             <material name="dark"/>
         </visual>
 
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <cylinder length="0" radius="0"/>
-            </geometry>
-        </collision>
+        <!--        <collision>-->
+        <!--            <origin xyz="0 0 0" rpy="0 0 0"/>-->
+        <!--            <geometry>-->
+        <!--                <cylinder length="0" radius="0"/>-->
+        <!--            </geometry>-->
+        <!--        </collision>-->
     </link>
 
     <joint name="stem_left_joint" type="fixed">
@@ -78,12 +78,12 @@
             <material name="dark"/>
         </visual>
 
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <cylinder length="0" radius="0"/>
-            </geometry>
-        </collision>
+        <!--        <collision>-->
+        <!--            <origin xyz="0 0 0" rpy="0 0 0"/>-->
+        <!--            <geometry>-->
+        <!--                <cylinder length="0" radius="0"/>-->
+        <!--            </geometry>-->
+        <!--        </collision>-->
     </link>
 
     <joint name="stem_right_joint" type="fixed">
@@ -102,12 +102,12 @@
             <material name="dark"/>
         </visual>
 
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <box size="0 0 0"/>
-            </geometry>
-        </collision>
+        <!--        <collision>-->
+        <!--            <origin xyz="0 0 0" rpy="0 0 0"/>-->
+        <!--            <geometry>-->
+        <!--                <box size="0 0 0"/>-->
+        <!--            </geometry>-->
+        <!--        </collision>-->
     </link>
 
     <joint name="spoiler_joint" type="fixed">
@@ -116,6 +116,8 @@
         <origin xyz="-0.38 -0.46 0.01" rpy="0 0.5 0"/>
         <!--                <origin xyz="-0.16 -0.43 0.16" rpy="0 0.5 0"/>-->
     </joint>
+
+    <!--    ************************************************-->
 
     <!--    <link name="top">-->
     <!--        <visual>-->
@@ -140,7 +142,7 @@
     <!--        <origin xyz="-0.16 0.07 0.19" rpy="0 0 0"/>-->
     <!--    </joint>-->
 
-    <!--    &lt;!&ndash;    ************************************************&ndash;&gt;-->
+    <!--    ************************************************-->
 
     <joint name="wheel_left_joint" type="continuous">
         <parent link="base_link"/>
