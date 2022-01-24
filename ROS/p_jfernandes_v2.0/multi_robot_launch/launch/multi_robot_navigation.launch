@@ -1,32 +1,47 @@
 <launch>
+    <!--    map path to file-->
     <arg name="map_file" default="$(find p_jfernandes_navigation)/maps/house.yaml"/>
 
-
+    <!--    positions for amcl node-->
     <arg name="initial_pose_x" default="-1.0"/>
     <arg name="initial_pose_y" default="4.0"/>
     <arg name="initial_pose_a" default="3.14"/>
 
+    <!--    argument for robot name-->
     <arg name="robot_namespace" default="p_jfernandes"/>
+
+    <!--    arguments to open rviz and map node when launching multiple robots-->
+    <arg name="open_rviz" default="false"/>
+    <arg name="open_map" default="false"/>
 
     <!-- Map server -->
     <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
 
+    <!--    BLUE ROBOT-->
     <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
         <arg name="robot_namespace" value="p_jfernandes"/>
         <arg name="initial_pose_x" value="-7.0"/>
         <arg name="initial_pose_y" value="-3.0"/>
+        <arg name="open_rviz" value="false"/>
+        <arg name="open_map" value="false"/>
     </include>
 
+    <!--    RED ROBOT-->
     <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
         <arg name="robot_namespace" value="Red"/>
         <arg name="initial_pose_x" value="1.0"/>
         <arg name="initial_pose_y" value="4.0"/>
+        <arg name="open_rviz" value="false"/>
+        <arg name="open_map" value="false"/>
     </include>
 
+    <!--    GREEN ROBOT-->
     <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
         <arg name="robot_namespace" value="Green"/>
         <arg name="initial_pose_x" value="4.0"/>
         <arg name="initial_pose_y" value="1.0"/>
+        <arg name="open_rviz" value="false"/>
+        <arg name="open_map" value="false"/>
     </include>
 
 </launch>

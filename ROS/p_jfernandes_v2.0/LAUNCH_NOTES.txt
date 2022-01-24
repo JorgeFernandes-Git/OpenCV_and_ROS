@@ -1,20 +1,21 @@
 # open gazebo world house <--
-roslaunch p_jfernandes_bringup gazebo.launch
+        roslaunch p_jfernandes_bringup gazebo.launch
 
 # launch one car in world <--
-roslaunch p_jfernandes_bringup bringup.launch player_name:="..." player_color:="..."
+        roslaunch p_jfernandes_bringup bringup.launch player_name:="..." player_color:="..."
 
-# launch navigation nodes for one car (this needs some modifications before launch: rviz to true and load map(see file turtlebot3_navigation.launch)
-roslaunch p_jfernandes_navigation turtlebot3_navigation.launch
+# launch navigation nodes for one car (this needs some modifications
+before launch: rviz to true and load map(see file turtlebot3_navigation.launch)
+        roslaunch p_jfernandes_navigation turtlebot3_navigation.launch
 
 
 ------------------------------------------------------
 # launch multiple cars
-roslaunch multi_robot_launch multi_robot.launch
+        roslaunch multi_robot_launch multi_robot.launch
 
 # load navigation nodes and map
-roslaunch multi_robot_launch multi_robot_navigation.launch
+        roslaunch multi_robot_launch multi_robot_navigation.launch
 
 # run script for hunting and escape
-roslaunch p_jfernandes_mode_state multi_robot.launch
+        roslaunch p_jfernandes_mode_state multi_robot.launch
 
