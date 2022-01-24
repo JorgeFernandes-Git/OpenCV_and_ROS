@@ -1,5 +1,6 @@
 <launch>
 
+    <!--    BLUE ROBOT-->
     <node name="p_jfernandes_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
         <param name="robot_name" value="p_jfernandes"/>
         <param name="robot_to_catch" value="Red"/>
@@ -7,6 +8,7 @@
         <remap from="p_jfernandes/move_base_simple/goal" to="p_jfernandes/move_base_simple/goal"/>
     </node>
 
+    <!--    RED ROBOT-->
     <node name="Red_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
         <param name="robot_name" value="Red"/>
         <param name="robot_to_catch" value="Green"/>
@@ -14,6 +16,7 @@
         <remap from="p_jfernandes/move_base_simple/goal" to="Red/move_base_simple/goal"/>
     </node>
 
+    <!--    GREEN ROBOT-->
     <node name="Green_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
         <param name="robot_name" value="Green"/>
         <param name="robot_to_catch" value="p_jfernandes"/>

@@ -7,9 +7,15 @@ import rospy
 
 # variables
 # robot_name = rospy.remap_name("Red")
+# arena limits 14*10 x=[-7,7] y=[-5, 5]
+x_arena_min = -7
+x_arena_max = 7
+
+y_arena_min = 0
+y_arena_max = 5
 
 # rate_hz = rospy.get_param("~rate")
-rate_hz = 1.0
+rate_hz = 0.5
 
 # nodes
 pose_stamped_node = rospy.remap_name("p_jfernandes/move_base_simple/goal")
@@ -49,13 +55,14 @@ def main():
         # position of targets
         x_to_catch = state_to_catch.pose.position.x
         y_to_catch = state_to_catch.pose.position.y
-        
+
         x_to_escape = state_to_escape.pose.position.x
         y_to_escape = state_to_escape.pose.position.y
+        z_orientation_to_escape = state_to_escape.twist.angular.z
 
         # distance to robot to escape
-        distance_to_escape = math.sqrt((x_to_escape-x_pos)**2 + (y_to_escape-y_pos)**2)
-        thresh_dist_to_escape = 5   # max proximity from robot to escape
+        distance_to_escape = math.sqrt((x_to_escape - x_pos) ** 2 + (y_to_escape - y_pos) ** 2)
+        thresh_dist_to_escape = 2  # max proximity from robot to escape
 
         if distance_to_escape > thresh_dist_to_escape:
 
@@ -67,7 +74,7 @@ def main():
             goal_to_catch.pose.position.y = y_to_catch
             goal_to_catch.pose.orientation.w = 0.5
 
-            print(f'{robot_to_catch} at position {x_to_catch},{y_to_catch}')
+            # print(f'{robot_to_catch} at position {x_to_catch},{y_to_catch}')
             pub.publish(goal_to_catch)
 
         else:
@@ -76,18 +83,43 @@ def main():
             goal_to_escape.header.stamp = rospy.Time.now()
             goal_to_escape.header.frame_id = "map"
 
-            # go to new position base on robot to escape position
-            if x_to_escape > 0:
-                goal_to_escape.pose.position.x = x_to_escape - 7
+            # THIS PART CAN BE IMPROVED IF THE ARENA AS ONLY POSITIVE COORDINATES
+            # # go to new position base on robot to escape position
+            if x_to_escape >= 0:
+                goal_to_escape.pose.position.x = x_to_escape - 4
                 goal_to_escape.pose.position.y = y_to_escape
             else:
-                goal_to_escape.pose.position.x = x_to_escape + 7
+                goal_to_escape.pose.position.x = x_to_escape + 4
                 goal_to_escape.pose.position.y = y_to_escape
+
+            # escape based on the orientation
+            # if z_orientation_to_escape >= 0:
+            #     goal_to_escape.pose.position.x = x_to_escape + 4
+            #     goal_to_escape.pose.position.y = y_to_escape
+            # else:
+            #     goal_to_escape.pose.position.x = x_to_escape - 4
+            #     goal_to_escape.pose.position.y = y_to_escape
+
+            # keep the robot in the boundaries of the arena *******************
+            # x limits
+            if goal_to_escape.pose.position.x > x_arena_max:
+                goal_to_escape.pose.position.x = x_arena_max
+
+            if goal_to_escape.pose.position.x < x_arena_min:
+                goal_to_escape.pose.position.x = x_arena_min
+
+            # y limits
+            if goal_to_escape.pose.position.y > y_arena_max:
+                goal_to_escape.pose.position.y = y_arena_max
+
+            if goal_to_escape.pose.position.y < y_arena_min:
+                goal_to_escape.pose.position.y = y_arena_min
+            # ******************************************************************
 
             goal_to_escape.pose.orientation.w = 0.5
 
-            print(f'{robot_to_escape} at position {x_to_escape},{y_to_escape} go to position '
-                  f'{goal_to_escape.pose.position.x},{ goal_to_escape.pose.position.y}')
+            # print(f'{robot_to_escape} at position {x_to_escape},{y_to_escape} go to position '
+            #       f'{goal_to_escape.pose.position.x},{goal_to_escape.pose.position.y}')
             pub.publish(goal_to_escape)
 
         rate.sleep()
