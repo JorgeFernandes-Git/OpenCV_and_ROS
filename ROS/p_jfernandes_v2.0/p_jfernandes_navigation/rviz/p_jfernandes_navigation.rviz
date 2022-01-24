@@ -6,16 +6,6 @@ Panels:
       Expanded:
         - /TF1/Frames1
         - /TF1/Tree1
-        - /Map1
-        - /Planner Plan1
-        - /Global Map1
-        - /Global Map1/Costmap1
-        - /Global Map1/Planner1
-        - /Local Map1
-        - /Local Map1/Polygon1
-        - /Local Map1/Costmap1
-        - /Local Map1/Planner1
-        - /Goal1
       Splitter Ratio: 0.5
     Tree Height: 541
   - Class: rviz/Selection
@@ -388,7 +378,7 @@ Visualization Manager:
       Shaft Length: 0.23000000417232513
       Shaft Radius: 0.009999999776482582
       Shape: Arrow (Flat)
-      Topic: /particlecloud
+      Topic: /p_jfernandes/particlecloud
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -404,7 +394,7 @@ Visualization Manager:
       Shaft Length: 0.5
       Shaft Radius: 0.05000000074505806
       Shape: Axes
-      Topic: /p_jfernandes/move_base_simple/goal
+      Topic: /p_jfernandes/move_base/current_goal
       Unreliable: false
       Value: true
   Enabled: true

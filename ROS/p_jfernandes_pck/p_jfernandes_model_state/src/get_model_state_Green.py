@@ -5,21 +5,18 @@ from geometry_msgs.msg import PoseStamped
 import rospy
 
 # variables
-# robot_name = rospy.remap_name("Red")
-
+robot_name = rospy.remap_name("p_jfernandes")
 # rate_hz = rospy.get_param("~rate")
 rate_hz = 1.0
 
 # nodes
-pose_stamped_node = rospy.remap_name("p_jfernandes/move_base_simple/goal")
+pose_stamped_node = rospy.remap_name("Green/move_base_simple/goal")
 get_model_state = rospy.remap_name("/gazebo/get_model_state")
 
 
 def main():
-    rospy.init_node('get_robot_position')
+    rospy.init_node('get_robot_position_Green')
     rate = rospy.Rate(rate_hz)
-
-    robot_name = rospy.get_param("~robot_name", default="Red")  # "~" means private param
 
     pub = rospy.Publisher(pose_stamped_node, PoseStamped, queue_size=10)
     goal = PoseStamped()

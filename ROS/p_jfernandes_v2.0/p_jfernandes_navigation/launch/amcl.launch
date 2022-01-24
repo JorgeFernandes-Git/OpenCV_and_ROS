@@ -56,8 +56,8 @@
             <param name="initial_pose_y" value="$(arg initial_pose_y)"/>
             <param name="initial_pose_a" value="$(arg initial_pose_a)"/>
 
-            <param name="odom_frame_id" value="p_jfernandes/odom"/>
-            <param name="base_frame_id" value="p_jfernandes/base_footprint"/>
+            <param name="odom_frame_id" value="$(arg robot_namespace)/odom"/>
+            <param name="base_frame_id" value="$(arg robot_namespace)/base_footprint"/>
 
             <!-- Use the single map server -->
             <remap from="static_map" to="/static_map"/>

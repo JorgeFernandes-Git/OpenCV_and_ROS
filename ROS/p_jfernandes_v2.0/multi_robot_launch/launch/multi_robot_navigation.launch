@@ -1,0 +1,29 @@
+<launch>
+    <arg name="map_file" default="$(find p_jfernandes_navigation)/maps/house.yaml"/>
+
+
+    <arg name="initial_pose_x" default="-1.0"/>
+    <arg name="initial_pose_y" default="4.0"/>
+    <arg name="initial_pose_a" default="3.14"/>
+
+    <arg name="robot_namespace" default="p_jfernandes"/>
+
+    <!-- Map server -->
+    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+        <arg name="robot_namespace" value="p_jfernandes"/>
+        <arg name="initial_pose_x" value="-1.0"/>
+    </include>
+
+    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+        <arg name="robot_namespace" value="Red"/>
+        <arg name="initial_pose_x" value="1.0"/>
+    </include>
+
+    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+        <arg name="robot_namespace" value="Green"/>
+        <arg name="initial_pose_x" value="3.0"/>
+    </include>
+
+</launch>

@@ -1,0 +1,18 @@
+<launch>
+
+    <node name="p_jfernandes_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
+        <param name="robot_name" value="Red"/>
+        <remap from="p_jfernandes/move_base_simple/goal" to="p_jfernandes/move_base_simple/goal"/>
+    </node>
+
+    <node name="Red_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
+        <param name="robot_name" value="Green"/>
+        <remap from="p_jfernandes/move_base_simple/goal" to="Red/move_base_simple/goal"/>
+    </node>
+
+    <node name="Green_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
+        <param name="robot_name" value="p_jfernandes"/>
+        <remap from="p_jfernandes/move_base_simple/goal" to="Green/move_base_simple/goal"/>
+    </node>
+
+</launch>
