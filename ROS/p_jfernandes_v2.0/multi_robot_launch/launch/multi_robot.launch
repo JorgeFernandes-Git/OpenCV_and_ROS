@@ -13,8 +13,8 @@
         <arg name="player_name" value="p_jfernandes"/>
         <arg name="player_color" value="Blue"/>
 
-        <arg name="x_pos" value="$(arg x_pos)"/>
-        <arg name="y_pos" value="$(arg y_pos)"/>
+        <arg name="x_pos" value="-7"/>
+        <arg name="y_pos" value="-3"/>
         <arg name="z_pos" value="$(arg z_pos)"/>
         <arg name="roll" value="$(arg roll)"/>
         <arg name="pitch" value="$(arg pitch)"/>
@@ -37,8 +37,8 @@
         <arg name="player_name" value="Green"/>
         <arg name="player_color" value="Green"/>
 
-        <arg name="x_pos" value="3"/>
-        <arg name="y_pos" value="$(arg y_pos)"/>
+        <arg name="x_pos" value="6"/>
+        <arg name="y_pos" value="-4"/>
         <arg name="z_pos" value="$(arg z_pos)"/>
         <arg name="roll" value="$(arg roll)"/>
         <arg name="pitch" value="$(arg pitch)"/>
