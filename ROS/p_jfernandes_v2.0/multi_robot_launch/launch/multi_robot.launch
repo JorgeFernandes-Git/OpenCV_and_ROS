@@ -9,6 +9,8 @@
     <arg name="pitch" default="0"/>
     <arg name="yaw" default="3.1415"/>
 
+
+    <!--BLUE ROBOT-->
     <include file="$(find p_jfernandes_bringup)/launch/bringup.launch">
         <arg name="player_name" value="p_jfernandes"/>
         <arg name="player_color" value="Blue"/>
@@ -21,6 +23,8 @@
         <arg name="yaw" value="$(arg yaw)"/>
     </include>
 
+
+    <!--RED ROBOT-->
     <include file="$(find p_jfernandes_bringup)/launch/bringup.launch">
         <arg name="player_name" value="Red"/>
         <arg name="player_color" value="Red"/>
@@ -33,12 +37,13 @@
         <arg name="yaw" value="$(arg yaw)"/>
     </include>
 
+    <!--    GREEN ROBOT-->
     <include file="$(find p_jfernandes_bringup)/launch/bringup.launch">
         <arg name="player_name" value="Green"/>
         <arg name="player_color" value="Green"/>
 
-        <arg name="x_pos" value="6"/>
-        <arg name="y_pos" value="-4"/>
+        <arg name="x_pos" value="4"/>
+        <arg name="y_pos" value="1"/>
         <arg name="z_pos" value="$(arg z_pos)"/>
         <arg name="roll" value="$(arg roll)"/>
         <arg name="pitch" value="$(arg pitch)"/>

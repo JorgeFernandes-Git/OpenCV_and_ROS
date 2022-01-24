@@ -1,17 +1,23 @@
 <launch>
 
     <node name="p_jfernandes_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
-        <param name="robot_name" value="Red"/>
+        <param name="robot_name" value="p_jfernandes"/>
+        <param name="robot_to_catch" value="Red"/>
+        <param name="robot_to_escape" value="Green"/>
         <remap from="p_jfernandes/move_base_simple/goal" to="p_jfernandes/move_base_simple/goal"/>
     </node>
 
     <node name="Red_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
-        <param name="robot_name" value="Green"/>
+        <param name="robot_name" value="Red"/>
+        <param name="robot_to_catch" value="Green"/>
+        <param name="robot_to_escape" value="p_jfernandes"/>
         <remap from="p_jfernandes/move_base_simple/goal" to="Red/move_base_simple/goal"/>
     </node>
 
     <node name="Green_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
-        <param name="robot_name" value="p_jfernandes"/>
+        <param name="robot_name" value="Green"/>
+        <param name="robot_to_catch" value="p_jfernandes"/>
+        <param name="robot_to_escape" value="Red"/>
         <remap from="p_jfernandes/move_base_simple/goal" to="Green/move_base_simple/goal"/>
     </node>
 

@@ -25,8 +25,8 @@
 
     <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
         <arg name="robot_namespace" value="Green"/>
-        <arg name="initial_pose_x" value="6.0"/>
-        <arg name="initial_pose_y" value="-4.0"/>
+        <arg name="initial_pose_x" value="4.0"/>
+        <arg name="initial_pose_y" value="1.0"/>
     </include>
 
 </launch>
