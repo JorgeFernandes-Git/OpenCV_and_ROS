@@ -1,0 +1,27 @@
+<launch>
+
+    <!--BLUE ROBOT-->
+    <node pkg="camera_and_lidar" name="blue_camera_and_lidar" type="camera_and_lidar.py">
+        <param name="robot_color" value="Blue"/>
+        <remap from="p_jfernandes/cmd_vel" to="p_jfernandes/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="p_jfernandes/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="p_jfernandes/scan"/>
+    </node>
+
+    <!--GREEN ROBOT-->
+    <node pkg="camera_and_lidar" name="green_camera_and_lidar" type="camera_and_lidar.py">
+        <param name="robot_color" value="Green"/>
+        <remap from="p_jfernandes/cmd_vel" to="Green/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="Green/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="Green/scan"/>
+    </node>
+
+    <!--RED ROBOT-->
+    <node pkg="camera_and_lidar" name="red_camera_and_lidar" type="camera_and_lidar.py">
+        <param name="robot_color" value="Red"/>
+        <remap from="p_jfernandes/cmd_vel" to="Red/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="Red/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="Red/scan"/>
+    </node>
+
+</launch>

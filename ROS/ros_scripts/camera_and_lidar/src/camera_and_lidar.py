@@ -23,8 +23,15 @@ bridge = CvBridge()
 twist = Twist()
 
 # variables
+robot_color = ""
 speed = 0
 turn = 550
+robot_to_escape = False
+
+# color ranges
+blue_ranges = {"b": {"min": 185, "max": 255}, "g": {"min": 0, "max": 255}, "r": {"min": 0, "max": 255}}
+red_rages = {"b": {"min": 0, "max": 255}, "g": {"min": 0, "max": 255}, "r": {"min": 184, "max": 255}}
+green_rages = {"b": {"min": 0, "max": 255}, "g": {"min": 185, "max": 255}, "r": {"min": 0, "max": 255}}
 
 
 def publisher(speed, turn):
@@ -51,6 +58,8 @@ class Server:
 
                 global speed
                 global turn
+                global robot_color
+                global robot_to_escape
 
                 # # ***************** lidar code **************
                 # obj_near = False
@@ -72,10 +81,15 @@ class Server:
                 # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
                 # from color_segment.py red and green
-                ranges_to_catch = {"b": {"min": 0, "max": 255}, "g": {"min": 0, "max": 255},
-                                   "r": {"min": 184, "max": 255}}
-                ranges_to_run = {"b": {"min": 0, "max": 255}, "g": {"min": 185, "max": 255},
-                                 "r": {"min": 0, "max": 255}}
+                if robot_color == "Blue":
+                    ranges_to_catch = red_rages
+                    ranges_to_run = green_rages
+                if robot_color == "Green":
+                    ranges_to_catch = blue_ranges
+                    ranges_to_run = red_rages
+                if robot_color == "Red":
+                    ranges_to_catch = green_rages
+                    ranges_to_run = blue_ranges
 
                 # numpy arrays
                 lower_to_catch = np.array(
@@ -100,7 +114,7 @@ class Server:
 
                 # if not obj_near:
                 # ****************** to catch *************************
-                if M_to_catch['m00'] > 0:
+                if M_to_catch['m00'] > 0 and not robot_to_escape:
                     cx_to_catch = int(M_to_catch['m10'] / M_to_catch['m00'])
                     cy_to_catch = int(M_to_catch['m01'] / M_to_catch['m00'])
                     cv2.circle(img, (cx_to_catch, cy_to_catch), 20, (0, 0, 255), -1)
@@ -120,7 +134,7 @@ class Server:
                         else:
                             speed = 0.3
 
-                else:  # not detected target, keep rotating
+                elif not robot_to_escape:  # not detected target, keep rotating
                     speed = 0
                     turn = 650
 
@@ -129,6 +143,14 @@ class Server:
                     cx_to_run = int(M_to_run['m10'] / M_to_run['m00'])
                     cy_to_run = int(M_to_run['m01'] / M_to_run['m00'])
                     cv2.circle(img, (cx_to_run, cy_to_run), 20, (255, 0, 0), -1)
+
+                    # escape from the robot
+                    robot_to_escape = True
+                    speed = 1.0
+                    turn = 650
+
+                else:
+                    robot_to_escape = False
 
                 # resize
                 # img = cv2.resize(img, (300, 300))
@@ -151,7 +173,10 @@ class Server:
 
 
 def main():
+    global robot_color
     rospy.init_node('camera_and_lidar')  # init node
+
+    robot_color = rospy.get_param("~robot_color", default="Blue")  # robot color param
 
     server = Server()  # server object
 
