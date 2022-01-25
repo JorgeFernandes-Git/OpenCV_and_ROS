@@ -27,6 +27,7 @@ robot_color = ""
 speed = 0
 turn = 550
 robot_to_escape = False
+robot_to_catch = False
 
 # color ranges
 blue_ranges = {"b": {"min": 185, "max": 255}, "g": {"min": 0, "max": 255}, "r": {"min": 0, "max": 255}}
@@ -60,21 +61,36 @@ class Server:
                 global turn
                 global robot_color
                 global robot_to_escape
+                global robot_to_catch
 
                 # # ***************** lidar code **************
-                # obj_near = False
-                # # print(len(self.laser_data.ranges))
-                #
-                # for range in self.laser_data.ranges:
-                #     if range < 0.2:
-                #         speed = 0
-                #         turn = 350
-                #         obj_near = True
-                #         publisher(speed=speed, turn=turn)
-                #
-                #     else:
-                #         obj_near = False
-                #         turn = 350
+                if not robot_to_catch and not robot_to_escape:
+                    regions = {
+                        'right': min(min(self.laser_data.ranges[288:323]), 10),
+                        'fright': min(min(self.laser_data.ranges[324:359]), 10),
+                        'front': min(min(self.laser_data.ranges[0:35]), 10),
+                        'fleft': min(min(self.laser_data.ranges[35:71]), 10),
+                        'left': min(min(self.laser_data.ranges[72:107]), 10),
+                    }
+                    speed = 0.3
+
+                    if regions["front"] < 0.5:
+                        speed = 0
+                        print("front")
+
+                        if regions["right"] < 0.5:
+                            turn = -50
+                            print("right")
+
+                        if regions["left"] < 0.5:
+                            turn = 50
+                            print("left")
+
+                    if regions["fright"] < 0.5:
+                        turn = -50
+
+                    if regions["fleft"] < 0.5:
+                        turn = 50
 
                 # ***************** camera code *************
                 img = bridge.imgmsg_to_cv2(self.image_data, desired_encoding='bgr8')
@@ -112,9 +128,9 @@ class Server:
                 M_to_catch = cv2.moments(mask_to_catch)
                 M_to_run = cv2.moments(mask_to_run)
 
-                # if not obj_near:
                 # ****************** to catch *************************
                 if M_to_catch['m00'] > 0 and not robot_to_escape:
+                    robot_to_catch = True
                     cx_to_catch = int(M_to_catch['m10'] / M_to_catch['m00'])
                     cy_to_catch = int(M_to_catch['m01'] / M_to_catch['m00'])
                     cv2.circle(img, (cx_to_catch, cy_to_catch), 20, (0, 0, 255), -1)
@@ -123,7 +139,6 @@ class Server:
                     threshold = cx_to_catch - width / 2
 
                     turn = threshold
-                    # speed = 0.3
 
                     if abs(turn) < 150:  # accelerate
                         if speed < 1.0:
@@ -137,6 +152,7 @@ class Server:
                 elif not robot_to_escape:  # not detected target, keep rotating
                     speed = 0.3
                     turn = 150
+                    robot_to_catch = False
 
                 # ****************** to run *************************
                 if M_to_run['m00'] > 0:
