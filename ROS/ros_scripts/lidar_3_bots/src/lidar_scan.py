@@ -58,10 +58,23 @@ def callback_msg_received(msg):
         'left': min(min(msg.ranges[72:107]), 10),
     }
 
-    if regions["front"] < 1:
+    if regions["front"] < 0.5:
         speed = 0
-        turn = 50
         print("front")
+
+        if regions["right"] < 0.5:
+            turn = -50
+            print("right")
+
+        if regions["left"] < 0.5:
+            turn = 50
+            print("left")
+
+    if regions["fright"] < 0.5:
+        turn = -50
+
+    if regions["fleft"] < 0.5:
+        turn = 50
 
     # for range in msg.ranges:
     #     if range < obj_dist_min:
@@ -74,10 +87,10 @@ def callback_msg_received(msg):
     #         speed = -0.2
     #         turn = err_max
 
-            # if msg.ranges[idx-5] < msg.ranges[idx]:
-            #     turn = err_max
-            # else:
-            #     turn = -err_max
+    # if msg.ranges[idx-5] < msg.ranges[idx]:
+    #     turn = err_max
+    # else:
+    #     turn = -err_max
 
     # print(len(msg.ranges))
     # print(speed, turn)
