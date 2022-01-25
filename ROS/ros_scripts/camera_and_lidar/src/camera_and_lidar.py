@@ -135,8 +135,8 @@ class Server:
                             speed = 0.3
 
                 elif not robot_to_escape:  # not detected target, keep rotating
-                    speed = 0
-                    turn = 650
+                    speed = 0.3
+                    turn = 150
 
                 # ****************** to run *************************
                 if M_to_run['m00'] > 0:
@@ -146,8 +146,8 @@ class Server:
 
                     # escape from the robot
                     robot_to_escape = True
-                    speed = 1.0
-                    turn = 650
+                    speed = -1.0
+                    turn = 0
 
                 else:
                     robot_to_escape = False

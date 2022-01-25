@@ -36,13 +36,12 @@ def publisher(speed, turn):
 
 
 def callback_msg_received(msg):
-
     turn = 0
     err_inc = 0.1
     err_min = 0
     err_max = 90
 
-    speed = 0.5
+    speed = 0.3
     spd_inc = 0.001
     spd_min = 0
     spd_max = 0.5
@@ -51,16 +50,29 @@ def callback_msg_received(msg):
     angle_min = 0
     angle_max = 90
 
+    regions = {
+        'right': min(min(msg.ranges[288:323]), 10),
+        'fright': min(min(msg.ranges[324:359]), 10),
+        'front': min(min(msg.ranges[0:35]), 10),
+        'fleft': min(min(msg.ranges[35:71]), 10),
+        'left': min(min(msg.ranges[72:107]), 10),
+    }
+
+    if regions["front"] < 1:
+        speed = 0
+        turn = 50
+        print("front")
+
     # for range in msg.ranges:
     #     if range < obj_dist_min:
     #         speed = 0
     #         turn = 90
 
-    # only cover a range
-    for idx in range(angle_min, angle_max):
-        if msg.ranges[idx] < obj_dist_min:
-            speed = -0.2
-            turn = err_max
+    # # only cover a range
+    # for idx in range(angle_min, angle_max):
+    #     if msg.ranges[idx] < obj_dist_min:
+    #         speed = -0.2
+    #         turn = err_max
 
             # if msg.ranges[idx-5] < msg.ranges[idx]:
             #     turn = err_max
