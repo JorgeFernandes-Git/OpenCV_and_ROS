@@ -1,6 +1,9 @@
 <launch>
 
+    <arg name="output_screen" default="screen"/>
+
     <!--BLUE ROBOT-->
+    <!--    <node pkg="camera_and_lidar" name="blue_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
     <node pkg="camera_and_lidar" name="blue_camera_and_lidar" type="camera_and_lidar.py">
         <param name="robot_color" value="Blue"/>
         <remap from="p_jfernandes/cmd_vel" to="p_jfernandes/cmd_vel"/>
@@ -9,6 +12,7 @@
     </node>
 
     <!--GREEN ROBOT-->
+    <!--    <node pkg="camera_and_lidar" name="green_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
     <node pkg="camera_and_lidar" name="green_camera_and_lidar" type="camera_and_lidar.py">
         <param name="robot_color" value="Green"/>
         <remap from="p_jfernandes/cmd_vel" to="Green/cmd_vel"/>
@@ -17,6 +21,7 @@
     </node>
 
     <!--RED ROBOT-->
+    <!--    <node pkg="camera_and_lidar" name="red_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
     <node pkg="camera_and_lidar" name="red_camera_and_lidar" type="camera_and_lidar.py">
         <param name="robot_color" value="Red"/>
         <remap from="p_jfernandes/cmd_vel" to="Red/cmd_vel"/>

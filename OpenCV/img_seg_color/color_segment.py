@@ -6,8 +6,11 @@ import numpy as np
 from cv2 import FONT_ITALIC
 
 """
-Script to segment the colors on a video from the pc webcam
+Script to segment the colors on a video from the pc webcam or image
 """
+
+path_to_img = "green_car.jpg"
+image_file = path_to_img + ".json"
 
 
 def onTrackbar(threshold):
@@ -16,7 +19,7 @@ def onTrackbar(threshold):
 
 def main():
     # capture = cv2.VideoCapture(0)  # connect to webcam
-    image = cv2.imread("cars_colors.jpg")
+    image = cv2.imread(path_to_img)
     image = cv2.resize(image, (850, 535))  # resize the capture window
     # image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     window_frame = "frame"
@@ -91,7 +94,7 @@ def main():
         # w to save the json file
         if k == ord("w"):
             # save json file
-            file_name = 'limits.json'
+            file_name = image_file
             with open(file_name, 'w') as file_handle:
                 print('Limits file saved in directory by the name ' + file_name)
                 json.dump(ranges_pcss, file_handle)
