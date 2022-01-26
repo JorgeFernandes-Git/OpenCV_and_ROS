@@ -86,7 +86,6 @@ class Server:
 
         if not self.robot_to_catch and not self.robot_to_escape:
             print("Robot in LIDAR mode")
-            # ******************************************************
             # lidar decisions **************************************
             if regions["frontr"] < lidar_max_dist_to_obj or regions["frontl"] < lidar_max_dist_to_obj:
                 self.speed = 0
@@ -109,18 +108,9 @@ class Server:
                 self.turn = 0
 
                 # some code that make the robot turn if distance to object is too high
-                # this way the robot will find door more easily
-
-                # if regions["right"] < lidar_max_dist_to_obj:
-                #     self.turn = -lidar_turn_speed
-                #     # print("right")
-                #
-                # if regions["left"] < lidar_max_dist_to_obj:
-                #     self.turn = lidar_turn_speed
-                #     # print("left")
+                # this way the robot will find doors more easily
 
         if self.robot_to_escape:
-            # ******************************************************
             # lidar decisions **************************************
             if regions["backr"] < lidar_max_dist_to_obj or regions["backl"] < lidar_max_dist_to_obj:
                 self.speed = -1
@@ -141,21 +131,9 @@ class Server:
                 self.speed = -1.0
                 self.turn = 0
 
-                # some code that make the robot turn if distance to object is too high
-                # this way the robot will find door more easily
-
-                # if regions["right"] < lidar_max_dist_to_obj:
-                #     self.turn = -lidar_turn_speed
-                #     # print("right")
-                #
-                # if regions["left"] < lidar_max_dist_to_obj:
-                #     self.turn = lidar_turn_speed
-                #     # print("left")
-
         return self.speed, self.turn
 
     def camera_navigation(self):
-
         # ***************** camera code *************
         img = self.bridge.imgmsg_to_cv2(self.image_data, desired_encoding='bgr8')
         # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -167,6 +145,7 @@ class Server:
         # img dimensions
         height, width, dimension = img.shape
 
+        # moments - center of the blob
         M_to_catch = cv2.moments(mask_to_catch)
         M_to_run = cv2.moments(mask_to_run)
 
@@ -194,8 +173,6 @@ class Server:
                     self.speed = 0.3
 
         elif not self.robot_to_escape:  # not detected target
-            # self.speed = 0.3
-            # self.turn = 150
             self.robot_to_catch = False
 
         # ****************** to escape *************************
