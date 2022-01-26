@@ -18,9 +18,6 @@ camera_node = rospy.remap_name("p_jfernandes/camera/rgb/image_raw")
 # lidar node
 lidar_node = rospy.remap_name("p_jfernandes/scan")
 
-# flags
-show_cameras_img = False
-
 # color ranges
 blue_ranges = {"b": {"min": 116, "max": 148}, "g": {"min": 0, "max": 4}, "r": {"min": 0, "max": 6}}
 red_rages = {"b": {"min": 0, "max": 17}, "g": {"min": 0, "max": 25}, "r": {"min": 128, "max": 142}}
@@ -28,7 +25,7 @@ green_rages = {"b": {"min": 0, "max": 31}, "g": {"min": 243, "max": 255}, "r": {
 
 
 class Server:
-    def __init__(self, robot_color):
+    def __init__(self, robot_color, show_camera_img=False):
         self.laser_data = None
         self.image_data = None
 
@@ -41,6 +38,7 @@ class Server:
         self.robot_color = robot_color
         self.robot_to_catch = False
         self.robot_to_escape = False
+        self.show_camera_img = show_camera_img
 
         # from color_segment.py
         if self.robot_color == "Blue":
@@ -92,8 +90,10 @@ class Server:
             # lidar decisions **************************************
             if regions["frontr"] < lidar_max_dist_to_obj or regions["frontl"] < lidar_max_dist_to_obj:
                 self.speed = 0
-                self.turn = lidar_turn_speed
-                # print("front")
+                if regions["fright"] <= regions["fleft"]:
+                    self.turn = -lidar_turn_speed
+                else:
+                    self.turn = lidar_turn_speed
 
                 if regions["frontr"] < 0.2 or regions["frontl"] < 0.2:
                     self.speed = -0.3
@@ -213,7 +213,7 @@ class Server:
         else:
             self.robot_to_escape = False
 
-        if show_cameras_img:
+        if self.show_camera_img:
             # resize
             img = cv2.resize(img, (300, 300))
             mask_to_catch = cv2.resize(mask_to_catch, (300, 300))
