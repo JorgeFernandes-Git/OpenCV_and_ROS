@@ -88,7 +88,6 @@ class Server:
 
         if not self.robot_to_catch and not self.robot_to_escape:
             print("Robot in LIDAR mode")
-
             # ******************************************************
             # lidar decisions **************************************
             if regions["frontr"] < lidar_max_dist_to_obj or regions["frontl"] < lidar_max_dist_to_obj:
