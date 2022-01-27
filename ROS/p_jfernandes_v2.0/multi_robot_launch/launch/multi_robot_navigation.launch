@@ -20,6 +20,7 @@
     <!--    BLUE ROBOT-->
     <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
         <arg name="robot_namespace" value="p_jfernandes"/>
+        <!--        initial pose-->
         <arg name="initial_pose_x" value="-7.0"/>
         <arg name="initial_pose_y" value="-3.0"/>
         <arg name="open_rviz" value="false"/>
@@ -29,6 +30,7 @@
     <!--    RED ROBOT-->
     <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
         <arg name="robot_namespace" value="Red"/>
+        <!--        initial pose-->
         <arg name="initial_pose_x" value="1.0"/>
         <arg name="initial_pose_y" value="4.0"/>
         <arg name="open_rviz" value="false"/>
@@ -38,6 +40,7 @@
     <!--    GREEN ROBOT-->
     <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
         <arg name="robot_namespace" value="Green"/>
+        <!--        initial pose-->
         <arg name="initial_pose_x" value="4.0"/>
         <arg name="initial_pose_y" value="1.0"/>
         <arg name="open_rviz" value="false"/>

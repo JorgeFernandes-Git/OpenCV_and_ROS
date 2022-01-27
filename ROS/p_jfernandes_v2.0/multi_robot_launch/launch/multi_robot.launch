@@ -14,9 +14,9 @@
     <include file="$(find p_jfernandes_bringup)/launch/bringup.launch">
         <arg name="player_name" value="p_jfernandes"/>
         <arg name="player_color" value="Blue"/>
-
-        <arg name="x_pos" value="-7"/>
-        <arg name="y_pos" value="-3"/>
+        <!--        initial pose-->
+        <arg name="x_pos" value="-8"/>
+        <arg name="y_pos" value="0"/>
         <arg name="z_pos" value="$(arg z_pos)"/>
         <arg name="roll" value="$(arg roll)"/>
         <arg name="pitch" value="$(arg pitch)"/>
@@ -28,8 +28,8 @@
     <include file="$(find p_jfernandes_bringup)/launch/bringup.launch">
         <arg name="player_name" value="Red"/>
         <arg name="player_color" value="Red"/>
-
-        <arg name="x_pos" value="1"/>
+        <!--        initial pose-->
+        <arg name="x_pos" value="4"/>
         <arg name="y_pos" value="$(arg y_pos)"/>
         <arg name="z_pos" value="$(arg z_pos)"/>
         <arg name="roll" value="$(arg roll)"/>
@@ -41,7 +41,7 @@
     <include file="$(find p_jfernandes_bringup)/launch/bringup.launch">
         <arg name="player_name" value="Green"/>
         <arg name="player_color" value="Green"/>
-
+        <!--        initial pose-->
         <arg name="x_pos" value="4"/>
         <arg name="y_pos" value="1"/>
         <arg name="z_pos" value="$(arg z_pos)"/>

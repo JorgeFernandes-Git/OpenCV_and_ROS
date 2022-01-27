@@ -3,12 +3,12 @@ import math
 import random
 
 from gazebo_msgs.msg import ModelState
+from geometry_msgs.msg import PoseWithCovarianceStamped
 from gazebo_msgs.srv import GetModelState, SetModelState
 from geometry_msgs.msg import PoseStamped
 import rospy
 
 # variables
-# robot_name = rospy.remap_name("Red")
 # arena limits 14*10 x=[-7,7] y=[-5, 5]
 x_arena_min = -7
 x_arena_max = 7
@@ -20,7 +20,8 @@ y_arena_max = 5
 rate_hz = 0.5
 
 # nodes
-pose_stamped_node = rospy.remap_name("p_jfernandes/move_base_simple/goal")
+pose_stamped_node = rospy.remap_name("p_jfernandes/move_base_simple/goal")  # in rviz 2D Nav Goal
+pose_with_covariance_stamped_node = rospy.remap_name("p_jfernandes/initialpose")  # in rviz 2D Pose Estimate
 get_model_state = rospy.remap_name("/gazebo/get_model_state")
 
 
@@ -32,7 +33,9 @@ def main():
     robot_to_catch = rospy.get_param("~robot_to_catch", default="Red")  # robot to catch
     robot_to_escape = rospy.get_param("~robot_to_escape", default="Green")  # robot to escape
 
+    # topics to publish on
     pub = rospy.Publisher(pose_stamped_node, PoseStamped, queue_size=10)  # publisher on the move_base_simple/goal topic
+    pub_actual_pose = rospy.Publisher(pose_with_covariance_stamped_node, PoseWithCovarianceStamped, queue_size=10)
 
     # pose stamped objects
     goal_to_catch = PoseStamped()
@@ -65,6 +68,7 @@ def main():
         # distance to robot to escape
         distance_to_escape = math.sqrt((x_to_escape - x_pos) ** 2 + (y_to_escape - y_pos) ** 2)
         thresh_dist_to_escape = 3  # max proximity from robot to escape
+
 
         if distance_to_escape > thresh_dist_to_escape:
 
@@ -126,38 +130,43 @@ def main():
 
         # try to set the robot in a new position after get touch by escape robot but this way it loses
         # the amcl location for navigation *****************************************************************************
-        #
-        # limit_touch = 0.2
-        # if x_to_escape-limit_touch < x_pos < x_to_escape+limit_touch \
-        #         and y_to_escape-limit_touch < y_pos < y_to_escape+limit_touch:
-        #     print("ROBOT CATCHED!!!!!!")
-        #     # return robot to initial position
-        #     x_new_pos = random.randrange(x_arena_min, x_arena_max)
-        #     y_new_pos = random.randrange(y_arena_min, y_arena_max)
-        #
-        #     state_msg = ModelState()
-        #     state_msg.model_name = robot_name
-        #     state_msg.pose.position.x = x_new_pos
-        #     state_msg.pose.position.y = y_new_pos
-        #     state_msg.pose.position.z = 0
-        #     state_msg.pose.orientation.x = 0
-        #     state_msg.pose.orientation.y = 0
-        #     state_msg.pose.orientation.z = 0
-        #     state_msg.pose.orientation.w = 3.14
-        #
-        #     rospy.set_param('/p_jfernandes/amcl/initial_pose_x', 'x_new_pos')
-        #     rospy.set_param('/p_jfernandes/amcl/initial_pose_y', 'y_new_pos')
-        #     rospy.set_param('/p_jfernandes/amcl/initial_pose_a', '3.14')
-        #
-        #     rospy.wait_for_service('/gazebo/set_model_state')
-        #     try:
-        #         set_state = rospy.ServiceProxy('/gazebo/set_model_state', SetModelState)
-        #         resp = set_state(state_msg)
-        #
-        #         # pub_gazebo = rospy.Publisher("/gazebo/set_model_state", ModelState, queue_size=10)
-        #         # pub_gazebo.publish(state_msg)
-        #     except rospy.ServiceException as e:
-        #         print("Service call failed: %s" % e)
+
+        limit_touch = 0.5
+        if x_to_escape-limit_touch < x_pos < x_to_escape+limit_touch \
+                and y_to_escape-limit_touch < y_pos < y_to_escape+limit_touch:
+            print("ROBOT CATCHED!!!!!!")
+            # return robot to initial position
+            x_new_pos = random.randrange(x_arena_min, x_arena_max)
+            y_new_pos = random.randrange(y_arena_min, y_arena_max)
+
+            state_msg = ModelState()
+            state_msg.model_name = robot_name
+            state_msg.pose.position.x = x_new_pos
+            state_msg.pose.position.y = y_new_pos
+            state_msg.pose.position.z = 0
+            state_msg.pose.orientation.x = 0
+            state_msg.pose.orientation.y = 0
+            state_msg.pose.orientation.z = 0
+            state_msg.pose.orientation.w = 3.14
+
+            # used to localize the robot in space for amcl node
+            actual_position = PoseWithCovarianceStamped()
+            actual_position.header.stamp = rospy.Time.now()
+            actual_position.header.frame_id = "map"
+            actual_position.pose.pose.position.x = x_new_pos
+            actual_position.pose.pose.position.y = y_new_pos
+            actual_position.pose.pose.orientation.w = 3.14
+
+            rospy.wait_for_service('/gazebo/set_model_state')
+            try:
+                set_state = rospy.ServiceProxy('/gazebo/set_model_state', SetModelState)
+                resp = set_state(state_msg)
+
+                # pub new pose to update amcl
+                pub_actual_pose.publish(actual_position)
+
+            except rospy.ServiceException as e:
+                print("Service call failed: %s" % e)
         # **************************************************************************************************************
 
         rate.sleep()

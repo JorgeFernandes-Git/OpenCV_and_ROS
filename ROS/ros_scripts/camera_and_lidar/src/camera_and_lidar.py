@@ -40,6 +40,9 @@ class Server:
         self.robot_to_escape = False
         self.show_camera_img = show_camera_img
 
+        self.turning_right = False
+        self.turning_left = False
+
         # from color_segment.py
         if self.robot_color == "Blue":
             self.ranges_to_catch = red_rages
@@ -89,26 +92,48 @@ class Server:
             # lidar decisions **************************************
             if regions["frontr"] < lidar_max_dist_to_obj or regions["frontl"] < lidar_max_dist_to_obj:
                 self.speed = 0
+
+                # this if is used when the robot as only blocking objects in front of them
                 if regions["fright"] <= regions["fleft"]:
                     self.turn = -lidar_turn_speed
                 else:
                     self.turn = lidar_turn_speed
+                # **************************************
 
+                # make the robot go backwards when it is too close to an object
                 if regions["frontr"] < 0.2 or regions["frontl"] < 0.2:
                     self.speed = -0.3
+                # ******************************
 
+                # turn decisions ********************
                 if regions["fright"] < lidar_max_dist_to_obj:
                     self.turn = -lidar_turn_speed
 
                 if regions["fleft"] < lidar_max_dist_to_obj:
                     self.turn = lidar_turn_speed
-
+                # **********************
             else:
                 self.speed = 0.3
                 self.turn = 0
+                open_space_dist = 3
 
                 # some code that make the robot turn if distance to object is too high
                 # this way the robot will find doors more easily
+                # if regions["fright"] > 3:
+                #     self.turn = lidar_turn_speed
+                #     print("open area detected")
+
+                if regions["fright"] > open_space_dist:  # and not self.turning_left:
+                    self.turn = lidar_turn_speed
+                    # self.turning_right = True
+                    # self.turning_left = False
+                    print("open area detected on the right")
+
+                if regions["fleft"] > open_space_dist:  # and not self.turning_right:
+                    self.turn = -lidar_turn_speed
+                    # self.turning_right = False
+                    # self.turning_left = True
+                    print("open area detected on the left")
 
         if self.robot_to_escape:
             # lidar decisions **************************************
@@ -119,7 +144,7 @@ class Server:
                 if regions["backr"] < 0.2 or regions["backl"] < 0.2:
                     self.speed = 1
 
-                # print("front")
+                # print("back")
 
                 if regions["bright"] < lidar_max_dist_to_obj:
                     self.turn = -lidar_turn_speed

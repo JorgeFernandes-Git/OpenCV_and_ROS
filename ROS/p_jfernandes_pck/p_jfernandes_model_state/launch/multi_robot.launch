@@ -6,6 +6,7 @@
         <param name="robot_to_catch" value="Red"/>
         <param name="robot_to_escape" value="Green"/>
         <remap from="p_jfernandes/move_base_simple/goal" to="p_jfernandes/move_base_simple/goal"/>
+        <remap from="p_jfernandes/initialpose" to="p_jfernandes/initialpose"/>
     </node>
 
     <!--    RED ROBOT-->
@@ -14,6 +15,7 @@
         <param name="robot_to_catch" value="Green"/>
         <param name="robot_to_escape" value="p_jfernandes"/>
         <remap from="p_jfernandes/move_base_simple/goal" to="Red/move_base_simple/goal"/>
+        <remap from="p_jfernandes/initialpose" to="Red/initialpose"/>
     </node>
 
     <!--    GREEN ROBOT-->
@@ -22,6 +24,7 @@
         <param name="robot_to_catch" value="p_jfernandes"/>
         <param name="robot_to_escape" value="Red"/>
         <remap from="p_jfernandes/move_base_simple/goal" to="Green/move_base_simple/goal"/>
+        <remap from="p_jfernandes/initialpose" to="Green/initialpose"/>
     </node>
 
 </launch>
