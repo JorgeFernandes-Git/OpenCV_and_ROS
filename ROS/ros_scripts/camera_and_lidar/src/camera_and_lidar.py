@@ -117,7 +117,6 @@ class Server:
                 self.turn = 0
                 open_space_dist = 3
 
-
                 # some code that make the robot turn if distance to object is too high
                 # this way the robot will find doors more easily
                 # if regions["fright"] > 3:
