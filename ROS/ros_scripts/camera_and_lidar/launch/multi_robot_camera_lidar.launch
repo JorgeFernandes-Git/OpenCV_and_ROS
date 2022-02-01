@@ -4,29 +4,78 @@
 
     <!--BLUE ROBOT-->
     <!--    <node pkg="camera_and_lidar" name="blue_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
-    <node pkg="camera_and_lidar" name="blue_camera_and_lidar" type="camera_and_lidar.py">
+    <node pkg="camera_and_lidar" name="blue1_camera_and_lidar" type="camera_and_lidar.py">
         <param name="robot_color" value="Blue"/>
-        <remap from="p_jfernandes/cmd_vel" to="p_jfernandes/cmd_vel"/>
-        <remap from="p_jfernandes/camera/rgb/image_raw" to="p_jfernandes/camera/rgb/image_raw"/>
-        <remap from="p_jfernandes/scan" to="p_jfernandes/scan"/>
+        <remap from="p_jfernandes/cmd_vel" to="blue1/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="blue1/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="blue1/scan"/>
+    </node>
+
+    <!--    <node pkg="camera_and_lidar" name="blue_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
+    <node pkg="camera_and_lidar" name="blue2_camera_and_lidar" type="camera_and_lidar.py">
+        <param name="robot_color" value="Blue"/>
+        <remap from="p_jfernandes/cmd_vel" to="blue2/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="blue2/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="blue2/scan"/>
+    </node>
+
+    <!--    <node pkg="camera_and_lidar" name="blue_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
+    <node pkg="camera_and_lidar" name="blue3_camera_and_lidar" type="camera_and_lidar.py">
+        <param name="robot_color" value="Blue"/>
+        <remap from="p_jfernandes/cmd_vel" to="blue3/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="blue3/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="blue3/scan"/>
     </node>
 
     <!--GREEN ROBOT-->
     <!--    <node pkg="camera_and_lidar" name="green_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
-    <node pkg="camera_and_lidar" name="green_camera_and_lidar" type="camera_and_lidar.py">
+    <node pkg="camera_and_lidar" name="green1_camera_and_lidar" type="camera_and_lidar.py">
         <param name="robot_color" value="Green"/>
-        <remap from="p_jfernandes/cmd_vel" to="Green/cmd_vel"/>
-        <remap from="p_jfernandes/camera/rgb/image_raw" to="Green/camera/rgb/image_raw"/>
-        <remap from="p_jfernandes/scan" to="Green/scan"/>
+        <remap from="p_jfernandes/cmd_vel" to="green1/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="green1/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="green1/scan"/>
+    </node>
+
+    <!--    <node pkg="camera_and_lidar" name="green_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
+    <node pkg="camera_and_lidar" name="green2_camera_and_lidar" type="camera_and_lidar.py">
+        <param name="robot_color" value="Green"/>
+        <remap from="p_jfernandes/cmd_vel" to="green2/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="green2/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="green2/scan"/>
+    </node>
+
+    <!--    <node pkg="camera_and_lidar" name="green_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
+    <node pkg="camera_and_lidar" name="green3_camera_and_lidar" type="camera_and_lidar.py">
+        <param name="robot_color" value="Green"/>
+        <remap from="p_jfernandes/cmd_vel" to="green3/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="green3/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="green3/scan"/>
     </node>
 
     <!--RED ROBOT-->
     <!--    <node pkg="camera_and_lidar" name="red_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
-    <node pkg="camera_and_lidar" name="red_camera_and_lidar" type="camera_and_lidar.py">
+    <node pkg="camera_and_lidar" name="red1_camera_and_lidar" type="camera_and_lidar.py">
         <param name="robot_color" value="Red"/>
-        <remap from="p_jfernandes/cmd_vel" to="Red/cmd_vel"/>
-        <remap from="p_jfernandes/camera/rgb/image_raw" to="Red/camera/rgb/image_raw"/>
-        <remap from="p_jfernandes/scan" to="Red/scan"/>
+        <remap from="p_jfernandes/cmd_vel" to="red1/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="red1/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="red1/scan"/>
     </node>
+
+    <!--    <node pkg="camera_and_lidar" name="red_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
+    <node pkg="camera_and_lidar" name="red2_camera_and_lidar" type="camera_and_lidar.py">
+        <param name="robot_color" value="Red"/>
+        <remap from="p_jfernandes/cmd_vel" to="red2/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="red2/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="red2/scan"/>
+    </node>
+
+    <!--    <node pkg="camera_and_lidar" name="red_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">-->
+    <node pkg="camera_and_lidar" name="red3_camera_and_lidar" type="camera_and_lidar.py">
+        <param name="robot_color" value="Red"/>
+        <remap from="p_jfernandes/cmd_vel" to="red3/cmd_vel"/>
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="red3/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="red3/scan"/>
+    </node>
+
 
 </launch>
