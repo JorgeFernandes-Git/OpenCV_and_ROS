@@ -20,8 +20,8 @@ lidar_node = rospy.remap_name("p_jfernandes/scan")
 
 # color ranges
 blue_ranges = {"b": {"min": 116, "max": 148}, "g": {"min": 0, "max": 4}, "r": {"min": 0, "max": 6}}
-red_rages = {"b": {"min": 0, "max": 17}, "g": {"min": 0, "max": 25}, "r": {"min": 128, "max": 142}}
-green_rages = {"b": {"min": 0, "max": 31}, "g": {"min": 243, "max": 255}, "r": {"min": 0, "max": 23}}
+red_ranges = {"b": {"min": 0, "max": 17}, "g": {"min": 0, "max": 25}, "r": {"min": 128, "max": 142}}
+green_ranges = {"b": {"min": 0, "max": 31}, "g": {"min": 243, "max": 255}, "r": {"min": 0, "max": 23}}
 
 
 class Server:
@@ -38,6 +38,7 @@ class Server:
         self.robot_color = robot_color
         self.robot_to_catch = False
         self.robot_to_escape = False
+        self.robot_teammate = False
         self.show_camera_img = show_camera_img
 
         self.turning_right = False
@@ -45,14 +46,17 @@ class Server:
 
         # from color_segment.py
         if self.robot_color == "Blue":
-            self.ranges_to_catch = red_rages
-            self.ranges_to_run = green_rages
+            self.ranges_to_catch = red_ranges
+            self.ranges_to_run = green_ranges
+            self.ranges_teammate = blue_ranges
         if self.robot_color == "Green":
             self.ranges_to_catch = blue_ranges
-            self.ranges_to_run = red_rages
+            self.ranges_to_run = red_ranges
+            self.ranges_teammate = green_ranges
         if self.robot_color == "Red":
-            self.ranges_to_catch = green_rages
+            self.ranges_to_catch = green_ranges
             self.ranges_to_run = blue_ranges
+            self.ranges_teammate = red_ranges
 
         # numpy arrays
         self.lower_to_catch = np.array(
@@ -64,6 +68,11 @@ class Server:
             [self.ranges_to_run['b']['min'], self.ranges_to_run['g']['min'], self.ranges_to_run['r']['min']])
         self.upper_to_run = np.array(
             [self.ranges_to_run['b']['max'], self.ranges_to_run['g']['max'], self.ranges_to_run['r']['max']])
+
+        self.lower_teammate = np.array(
+            [self.ranges_teammate['b']['min'], self.ranges_teammate['g']['min'], self.ranges_teammate['r']['min']])
+        self.upper_teammate = np.array(
+            [self.ranges_teammate['b']['max'], self.ranges_teammate['g']['max'], self.ranges_teammate['r']['max']])
 
     def laser_callback(self, msg):
         self.laser_data = msg
@@ -87,7 +96,7 @@ class Server:
             'bleft': min(min(self.laser_data.ranges[197:243]), 10),
         }
 
-        if not self.robot_to_catch and not self.robot_to_escape:
+        if not self.robot_to_catch and not self.robot_to_escape and not self.robot_teammate:
             print("Robot in LIDAR mode")
             # lidar decisions **************************************
             if regions["frontr"] < lidar_max_dist_to_obj or regions["frontl"] < lidar_max_dist_to_obj:
@@ -113,7 +122,7 @@ class Server:
                     self.turn = lidar_turn_speed
                 # **********************
             else:
-                self.speed = 0.3
+                self.speed = 0.7
                 self.turn = 0
                 open_space_dist = 3
 
@@ -166,6 +175,7 @@ class Server:
         # masks
         mask_to_catch = cv2.inRange(img, self.lower_to_catch, self.upper_to_catch)
         mask_to_run = cv2.inRange(img, self.lower_to_run, self.upper_to_run)
+        mask_teammate = cv2.inRange(img, self.lower_teammate, self.upper_teammate)
 
         # img dimensions
         height, width, dimension = img.shape
@@ -173,6 +183,7 @@ class Server:
         # moments - center of the blob
         M_to_catch = cv2.moments(mask_to_catch)
         M_to_run = cv2.moments(mask_to_run)
+        M_teammate = cv2.moments(mask_teammate)
 
         # ****************** to catch *************************
         if M_to_catch['m00'] > 0 and not self.robot_to_escape:
@@ -214,16 +225,33 @@ class Server:
 
         else:
             self.robot_to_escape = False
+            
+        # ********************** team mate found *******************
+        if M_teammate['m00'] > 0 and not self.robot_to_escape and not self.robot_to_catch:
+            print("Team mate found")
 
+            cx_teammate = int(M_teammate['m10'] / M_teammate['m00'])
+            cy_teammate = int(M_teammate['m01'] / M_teammate['m00'])
+            cv2.circle(img, (cx_teammate, cy_teammate), 20, (255, 0, 0), -1)
+            
+            # keep teammates apart from each other
+            self.robot_teammate = True
+            self.turn = 550
+            self.speed = 0
+        else:
+            self.robot_teammate = False
+            
         if self.show_camera_img:
             # resize
             img = cv2.resize(img, (300, 300))
             mask_to_catch = cv2.resize(mask_to_catch, (300, 300))
             mask_to_run = cv2.resize(mask_to_run, (300, 300))
+            mask_teammate = cv2.resize(mask_teammate, (300, 300))
 
             # show images
             cv2.imshow("mask_to_catch", mask_to_catch)
             cv2.imshow("mask_to_run", mask_to_run)
+            cv2.imshow("mask_teammate", mask_teammate)
             cv2.imshow("image", img)
 
         k = cv2.waitKey(1) & 0xFF
@@ -244,7 +272,7 @@ class Server:
 
                 # # ***************** lidar code **************
                 if not self.robot_to_catch and not self.robot_to_escape:
-                    self.speed, self.turn = self.lidar_navigation(lidar_max_dist_to_obj=0.7, lidar_turn_speed=250)
+                    self.speed, self.turn = self.lidar_navigation(lidar_max_dist_to_obj=0.9, lidar_turn_speed=250)
 
                 print(self.speed, self.turn)
                 self.publisher(speed=self.speed, turn=self.turn)

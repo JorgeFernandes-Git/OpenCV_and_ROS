@@ -40,7 +40,6 @@
         <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
     </include>
 
-
     <!-- move_base -->
     <include file="$(find p_jfernandes_navigation)/launch/move_base.launch">
         <arg name="model" value="$(arg model)"/>
