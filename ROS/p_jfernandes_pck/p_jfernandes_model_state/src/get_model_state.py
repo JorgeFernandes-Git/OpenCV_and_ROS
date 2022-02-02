@@ -23,7 +23,7 @@ distances_to_catch = []
 distances_to_escape = []
 
 # rate_hz = rospy.get_param("~rate")
-rate_hz = 0.5
+rate_hz = 1
 
 # nodes
 pose_stamped_node = rospy.remap_name("blue1/move_base_simple/goal")  # in rviz 2D Nav Goal
@@ -139,6 +139,7 @@ def main():
             goal_to_catch.header.frame_id = "map"
 
             min_dist_to_catch = min(distances_to_catch)
+            # print(min_dist_to_catch)
 
             if min_dist_to_catch == distances_to_catch[0]:
                 goal_to_catch.pose.position.x = x_to_catch_1
