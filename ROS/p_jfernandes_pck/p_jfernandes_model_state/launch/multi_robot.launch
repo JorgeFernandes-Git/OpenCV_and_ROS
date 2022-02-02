@@ -3,8 +3,13 @@
     <!--    BLUE ROBOT-->
     <node name="Blue1_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
         <param name="robot_name" value="blue1"/>
-        <param name="robot_to_catch" value="red1"/>
-        <param name="robot_to_escape" value="green1"/>
+        <param name="robot_to_catch_1" value="red1"/>
+        <param name="robot_to_catch_2" value="red2"/>
+        <param name="robot_to_catch_3" value="red3"/>
+        <param name="robot_to_escape_1" value="green1"/>
+        <param name="robot_to_escape_2" value="green2"/>
+        <param name="robot_to_escape_3" value="green3"/>
+
         <remap from="p_jfernandes/move_base_simple/goal" to="blue1/move_base_simple/goal"/>
         <remap from="p_jfernandes/initialpose" to="blue1/initialpose"/>
     </node>
@@ -12,8 +17,13 @@
     <!--    RED ROBOT-->
     <node name="Red1_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
         <param name="robot_name" value="red1"/>
-        <param name="robot_to_catch" value="green1"/>
-        <param name="robot_to_escape" value="blue1"/>
+        <param name="robot_to_catch_1" value="green1"/>
+        <param name="robot_to_catch_2" value="green2"/>
+        <param name="robot_to_catch_3" value="green3"/>
+        <param name="robot_to_escape_1" value="blue1"/>
+        <param name="robot_to_escape_2" value="blue2"/>
+        <param name="robot_to_escape_3" value="blue3"/>
+
         <remap from="p_jfernandes/move_base_simple/goal" to="red1/move_base_simple/goal"/>
         <remap from="p_jfernandes/initialpose" to="red1/initialpose"/>
     </node>
@@ -21,8 +31,13 @@
     <!--    GREEN ROBOT-->
     <node name="Green1_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
         <param name="robot_name" value="green1"/>
-        <param name="robot_to_catch" value="blue1"/>
-        <param name="robot_to_escape" value="red1"/>
+        <param name="robot_to_catch_1" value="blue1"/>
+        <param name="robot_to_catch_2" value="blue2"/>
+        <param name="robot_to_catch_3" value="blue3"/>
+        <param name="robot_to_escape_1" value="red1"/>
+        <param name="robot_to_escape_2" value="red2"/>
+        <param name="robot_to_escape_3" value="red3"/>
+
         <remap from="p_jfernandes/move_base_simple/goal" to="green1/move_base_simple/goal"/>
         <remap from="p_jfernandes/initialpose" to="green1/initialpose"/>
     </node>
