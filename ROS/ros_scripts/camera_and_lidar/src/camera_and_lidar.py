@@ -25,7 +25,7 @@ green_ranges = {"b": {"min": 0, "max": 31}, "g": {"min": 243, "max": 255}, "r": 
 
 
 class Server:
-    def __init__(self, robot_color, show_camera_img=False):
+    def __init__(self, robot_color, show_camera_img=True):
         self.laser_data = None
         self.image_data = None
 
@@ -190,9 +190,47 @@ class Server:
             print("Robot in CATCH mode")
 
             self.robot_to_catch = True
-            cx_to_catch = int(M_to_catch['m10'] / M_to_catch['m00'])
-            cy_to_catch = int(M_to_catch['m01'] / M_to_catch['m00'])
-            cv2.circle(img, (cx_to_catch, cy_to_catch), 20, (0, 0, 255), -1)
+
+            # edges = cv2.Canny(mask_to_catch, 100, 200)
+            edges = cv2.GaussianBlur(mask_to_catch, (7, 7), 2)
+            kernel = np.ones((7, 7), np.uint8)
+            edges = cv2.morphologyEx(edges, cv2.MORPH_OPEN, kernel)
+            edges = cv2.medianBlur(edges, 9)
+            edges = cv2.dilate(edges, kernel, iterations=4)
+            kernel = np.ones((9, 9), np.uint8)
+            edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
+
+            contours, _ = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+            # for contours in contours:
+            #     (x, y, w, h) = cv2.boundingRect(contours)
+            #     # draw the rectangle over detected object
+            #
+            #     if cv2.contourArea(contours) < 3000:
+            #         continue
+            #
+            #     cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
+            #     cv2.putText(edges, '+', (int(x+w/2), int(y+h/2)), cv2.FONT_ITALIC, 1, (255, 0, 0), 2, cv2.LINE_8)
+            #     # print(cv2.contourArea(contours))
+
+            if len(contours) != 0:
+                # draw in blue the contours that were founded
+                # cv2.drawContours(output, contours, -1, 255, 3)
+
+                # find the biggest countour (c) by the area
+                c = max(contours, key=cv2.contourArea)
+                x, y, w, h = cv2.boundingRect(c)
+
+                # draw the biggest contour (c) in green
+                cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
+                cv2.putText(edges, '+', (int(x+w/2), int(y+h/2)), cv2.FONT_ITALIC, 1, (255, 0, 0), 2, cv2.LINE_8)
+
+                cx_to_catch = int(x+w/2)
+                cy_to_catch = int(y+h/2)
+            else:
+                cx_to_catch = int(M_to_catch['m10'] / M_to_catch['m00'])
+                cy_to_catch = int(M_to_catch['m01'] / M_to_catch['m00'])
+                # cv2.circle(img, (cx_to_catch, cy_to_catch), 20, (0, 0, 255), -1)
 
             # find center
             threshold = cx_to_catch - width / 2
@@ -250,6 +288,8 @@ class Server:
 
             # show images
             cv2.imshow("mask_to_catch", mask_to_catch)
+            cv2.imshow("edges", edges)
+
             cv2.imshow("mask_to_run", mask_to_run)
             cv2.imshow("mask_teammate", mask_teammate)
             cv2.imshow("image", img)

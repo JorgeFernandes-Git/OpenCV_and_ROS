@@ -1,0 +1,12 @@
+<launch>
+    <arg name="output_screen" default="screen"/>
+
+    <!--BLUE ROBOT-->
+    <node pkg="camera_and_lidar" name="blue_camera_and_lidar" type="camera_and_lidar.py" output="$(arg output_screen)">
+        <param name="robot_color" value="Blue"/>
+        <!--        <remap from="p_jfernandes/cmd_vel" to="blue1/cmd_vel"/>-->
+        <remap from="p_jfernandes/camera/rgb/image_raw" to="blue1/camera/rgb/image_raw"/>
+        <remap from="p_jfernandes/scan" to="blue1/scan"/>
+    </node>
+
+</launch>
