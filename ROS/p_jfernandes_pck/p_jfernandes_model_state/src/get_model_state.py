@@ -26,7 +26,7 @@ distances_to_escape = []
 rate_hz = 0.5
 
 # nodes
-pose_stamped_node = rospy.remap_name("p_jfernandes/move_base_simple/goal")  # in rviz 2D Nav Goal
+pose_stamped_node = rospy.remap_name("blue1/move_base_simple/goal")  # in rviz 2D Nav Goal
 get_model_state = rospy.remap_name("/gazebo/get_model_state")
 
 
@@ -50,6 +50,9 @@ def main():
     # pose stamped objects
     goal_to_catch = PoseStamped()
     goal_to_escape = PoseStamped()
+
+    # flags
+    to_escape_near = False
 
     while True:
         g_get_state = rospy.ServiceProxy(get_model_state, GetModelState)
@@ -122,67 +125,89 @@ def main():
 
         thresh_dist_to_escape = 3  # max proximity from robot to escape
 
-        for i, dist_to_escape in enumerate(distances_to_escape):
-            if dist_to_escape > thresh_dist_to_escape:
+        if distance_to_escape_1 < thresh_dist_to_escape or distance_to_escape_2 < thresh_dist_to_escape or distance_to_escape_3 < thresh_dist_to_escape:
+            to_escape_near = True
+        else:
+            to_escape_near = False
 
-                # final pose to catch *****************************
-                goal_to_catch.header.stamp = rospy.Time.now()
-                goal_to_catch.header.frame_id = "map"
+        # for i, dist_to_escape in enumerate(distances_to_escape):
+        # if dist_to_escape > thresh_dist_to_escape:
+        
+        if not to_escape_near:
+            # final pose to catch *****************************
+            goal_to_catch.header.stamp = rospy.Time.now()
+            goal_to_catch.header.frame_id = "map"
 
-                min_dist_to_catch = min(distances_to_catch)
+            min_dist_to_catch = min(distances_to_catch)
 
-                if min_dist_to_catch == distances_to_catch[0]:
-                    goal_to_catch.pose.position.x = x_to_catch_1
-                    goal_to_catch.pose.position.y = y_to_catch_1
-                if min_dist_to_catch == distances_to_catch[1]:
-                    goal_to_catch.pose.position.x = x_to_catch_2
-                    goal_to_catch.pose.position.y = y_to_catch_2
-                if min_dist_to_catch == distances_to_catch[2]:
-                    goal_to_catch.pose.position.x = x_to_catch_3
-                    goal_to_catch.pose.position.y = y_to_catch_3
+            if min_dist_to_catch == distances_to_catch[0]:
+                goal_to_catch.pose.position.x = x_to_catch_1
+                goal_to_catch.pose.position.y = y_to_catch_1
+            if min_dist_to_catch == distances_to_catch[1]:
+                goal_to_catch.pose.position.x = x_to_catch_2
+                goal_to_catch.pose.position.y = y_to_catch_2
+            if min_dist_to_catch == distances_to_catch[2]:
+                goal_to_catch.pose.position.x = x_to_catch_3
+                goal_to_catch.pose.position.y = y_to_catch_3
 
-                goal_to_catch.pose.orientation.w = 0.5
+            goal_to_catch.pose.orientation.w = 0.5
 
-                # print(f'{robot_to_catch} at position {x_to_catch},{y_to_catch}')
-                pub.publish(goal_to_catch)
+            print(f'Red at position {goal_to_catch.pose.position.x},{goal_to_catch.pose.position.y}')
+            pub.publish(goal_to_catch)
 
+        else:
+            # final pose to escape *****************************
+            goal_to_escape.header.stamp = rospy.Time.now()
+            goal_to_escape.header.frame_id = "map"
+
+            # x_to_escape = robot_to_escape_poses_x[i]
+            # y_to_escape = robot_to_escape_poses_y[i]
+            # THIS PART CAN BE IMPROVED IF THE ARENA AS ONLY POSITIVE COORDINATES
+            # # go to new position base on robot to escape position
+            
+            min_dist_to_escape = min(distances_to_escape)
+            
+            if min_dist_to_escape == distances_to_escape[0]:
+                goal_to_escape.pose.position.x = x_to_escape_1
+                goal_to_escape.pose.position.y = y_to_escape_1
+            if min_dist_to_escape == distances_to_escape[1]:
+                goal_to_escape.pose.position.x = x_to_escape_2
+                goal_to_escape.pose.position.y = y_to_escape_2
+            if min_dist_to_escape == distances_to_escape[2]:
+                goal_to_escape.pose.position.x = x_to_escape_3
+                goal_to_escape.pose.position.y = y_to_escape_3
+
+            x_to_escape = goal_to_escape.pose.position.x
+            y_to_escape = goal_to_escape.pose.position.y
+                
+            if x_to_escape >= 0:
+                goal_to_escape.pose.position.x = x_to_escape - 5
+                goal_to_escape.pose.position.y = y_to_escape
             else:
-                # final pose to escape *****************************
-                goal_to_escape.header.stamp = rospy.Time.now()
-                goal_to_escape.header.frame_id = "map"
+                goal_to_escape.pose.position.x = x_to_escape + 5
+                goal_to_escape.pose.position.y = y_to_escape
 
-                x_to_escape = robot_to_escape_poses_x[i]
-                y_to_escape = robot_to_escape_poses_y[i]
-                # THIS PART CAN BE IMPROVED IF THE ARENA AS ONLY POSITIVE COORDINATES
-                # # go to new position base on robot to escape position
-                if x_to_escape >= 0:
-                    goal_to_escape.pose.position.x = x_to_escape - 5
-                    goal_to_escape.pose.position.y = y_to_escape
-                else:
-                    goal_to_escape.pose.position.x = x_to_escape + 5
-                    goal_to_escape.pose.position.y = y_to_escape
+            # keep the robot in the boundaries of the arena *******************
+            # x limits
+            if goal_to_escape.pose.position.x > x_arena_max:
+                goal_to_escape.pose.position.x = x_arena_max
 
-                # keep the robot in the boundaries of the arena *******************
-                # x limits
-                if goal_to_escape.pose.position.x > x_arena_max:
-                    goal_to_escape.pose.position.x = x_arena_max
+            if goal_to_escape.pose.position.x < x_arena_min:
+                goal_to_escape.pose.position.x = x_arena_min
 
-                if goal_to_escape.pose.position.x < x_arena_min:
-                    goal_to_escape.pose.position.x = x_arena_min
+            # y limits
+            if goal_to_escape.pose.position.y > y_arena_max:
+                goal_to_escape.pose.position.y = y_arena_max
 
-                # y limits
-                if goal_to_escape.pose.position.y > y_arena_max:
-                    goal_to_escape.pose.position.y = y_arena_max
+            if goal_to_escape.pose.position.y < y_arena_min:
+                goal_to_escape.pose.position.y = y_arena_min
+            # ******************************************************************
 
-                if goal_to_escape.pose.position.y < y_arena_min:
-                    goal_to_escape.pose.position.y = y_arena_min
-                # ******************************************************************
+            goal_to_escape.pose.orientation.w = 0.5
 
-                goal_to_escape.pose.orientation.w = 0.5
-
-                # print(f'{robot_to_escape} at position {x_to_escape},{y_to_escape} go to position '
-                #       f'{goal_to_escape.pose.position.x},{goal_to_escape.pose.position.y}')
-                pub.publish(goal_to_escape)
+            print(f'Green at position {x_to_escape},{y_to_escape} go to position '
+                  f'{goal_to_escape.pose.position.x},{goal_to_escape.pose.position.y}')
+            pub.publish(goal_to_escape)
 
         rate.sleep()
 

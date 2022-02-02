@@ -4,6 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /Global Options1
         - /TF1/Frames1
         - /TF1/Tree1
       Splitter Ratio: 0.5
@@ -128,8 +129,8 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: RobotModel
-      Robot Description: p_jfernandes/robot_description
-      TF Prefix: p_jfernandes
+      Robot Description: blue1/robot_description
+      TF Prefix: blue1
       Update Interval: 0
       Value: true
       Visual Enabled: true
@@ -137,38 +138,278 @@ Visualization Manager:
       Enabled: true
       Frame Timeout: 15
       Frames:
-        All Enabled: false
+        All Enabled: true
+        blue1/base_footprint:
+          Value: true
+        blue1/base_link:
+          Value: true
+        blue1/base_scan:
+          Value: true
+        blue1/camera_link:
+          Value: true
+        blue1/camera_rgb_frame:
+          Value: true
+        blue1/camera_rgb_optical_frame:
+          Value: true
+        blue1/caster_back_left_link:
+          Value: true
+        blue1/caster_back_right_link:
+          Value: true
+        blue1/imu_link:
+          Value: true
+        blue1/odom:
+          Value: true
+        blue1/spoiler:
+          Value: true
+        blue1/stem_left:
+          Value: true
+        blue1/stem_right:
+          Value: true
+        blue1/wheel_left_link:
+          Value: true
+        blue1/wheel_right_link:
+          Value: true
+        blue2/base_footprint:
+          Value: true
+        blue2/base_link:
+          Value: true
+        blue2/base_scan:
+          Value: true
+        blue2/camera_link:
+          Value: true
+        blue2/camera_rgb_frame:
+          Value: true
+        blue2/camera_rgb_optical_frame:
+          Value: true
+        blue2/caster_back_left_link:
+          Value: true
+        blue2/caster_back_right_link:
+          Value: true
+        blue2/imu_link:
+          Value: true
+        blue2/odom:
+          Value: true
+        blue2/spoiler:
+          Value: true
+        blue2/stem_left:
+          Value: true
+        blue2/stem_right:
+          Value: true
+        blue2/wheel_left_link:
+          Value: true
+        blue2/wheel_right_link:
+          Value: true
+        blue3/base_footprint:
+          Value: true
+        blue3/base_link:
+          Value: true
+        blue3/base_scan:
+          Value: true
+        blue3/camera_link:
+          Value: true
+        blue3/camera_rgb_frame:
+          Value: true
+        blue3/camera_rgb_optical_frame:
+          Value: true
+        blue3/caster_back_left_link:
+          Value: true
+        blue3/caster_back_right_link:
+          Value: true
+        blue3/imu_link:
+          Value: true
+        blue3/odom:
+          Value: true
+        blue3/spoiler:
+          Value: true
+        blue3/stem_left:
+          Value: true
+        blue3/stem_right:
+          Value: true
+        blue3/wheel_left_link:
+          Value: true
+        blue3/wheel_right_link:
+          Value: true
+        green1/base_footprint:
+          Value: true
+        green1/base_link:
+          Value: true
+        green1/base_scan:
+          Value: true
+        green1/camera_link:
+          Value: true
+        green1/camera_rgb_frame:
+          Value: true
+        green1/camera_rgb_optical_frame:
+          Value: true
+        green1/caster_back_left_link:
+          Value: true
+        green1/caster_back_right_link:
+          Value: true
+        green1/imu_link:
+          Value: true
+        green1/odom:
+          Value: true
+        green1/spoiler:
+          Value: true
+        green1/stem_left:
+          Value: true
+        green1/stem_right:
+          Value: true
+        green1/wheel_left_link:
+          Value: true
+        green1/wheel_right_link:
+          Value: true
+        green2/base_footprint:
+          Value: true
+        green2/base_link:
+          Value: true
+        green2/base_scan:
+          Value: true
+        green2/camera_link:
+          Value: true
+        green2/camera_rgb_frame:
+          Value: true
+        green2/camera_rgb_optical_frame:
+          Value: true
+        green2/caster_back_left_link:
+          Value: true
+        green2/caster_back_right_link:
+          Value: true
+        green2/imu_link:
+          Value: true
+        green2/odom:
+          Value: true
+        green2/spoiler:
+          Value: true
+        green2/stem_left:
+          Value: true
+        green2/stem_right:
+          Value: true
+        green2/wheel_left_link:
+          Value: true
+        green2/wheel_right_link:
+          Value: true
+        green3/base_footprint:
+          Value: true
+        green3/base_link:
+          Value: true
+        green3/base_scan:
+          Value: true
+        green3/camera_link:
+          Value: true
+        green3/camera_rgb_frame:
+          Value: true
+        green3/camera_rgb_optical_frame:
+          Value: true
+        green3/caster_back_left_link:
+          Value: true
+        green3/caster_back_right_link:
+          Value: true
+        green3/imu_link:
+          Value: true
+        green3/odom:
+          Value: true
+        green3/spoiler:
+          Value: true
+        green3/stem_left:
+          Value: true
+        green3/stem_right:
+          Value: true
+        green3/wheel_left_link:
+          Value: true
+        green3/wheel_right_link:
+          Value: true
         map:
           Value: true
-        p_jfernandes/base_footprint:
+        red1/base_footprint:
           Value: true
-        p_jfernandes/base_link:
+        red1/base_link:
           Value: true
-        p_jfernandes/base_scan:
+        red1/base_scan:
           Value: true
-        p_jfernandes/camera_link:
+        red1/camera_link:
           Value: true
-        p_jfernandes/camera_rgb_frame:
+        red1/camera_rgb_frame:
           Value: true
-        p_jfernandes/camera_rgb_optical_frame:
+        red1/camera_rgb_optical_frame:
           Value: true
-        p_jfernandes/caster_back_left_link:
+        red1/caster_back_left_link:
           Value: true
-        p_jfernandes/caster_back_right_link:
+        red1/caster_back_right_link:
           Value: true
-        p_jfernandes/imu_link:
+        red1/imu_link:
           Value: true
-        p_jfernandes/odom:
+        red1/odom:
           Value: true
-        p_jfernandes/spoiler:
+        red1/spoiler:
           Value: true
-        p_jfernandes/stem_left:
+        red1/stem_left:
           Value: true
-        p_jfernandes/stem_right:
+        red1/stem_right:
           Value: true
-        p_jfernandes/wheel_left_link:
+        red1/wheel_left_link:
           Value: true
-        p_jfernandes/wheel_right_link:
+        red1/wheel_right_link:
+          Value: true
+        red2/base_footprint:
+          Value: true
+        red2/base_link:
+          Value: true
+        red2/base_scan:
+          Value: true
+        red2/camera_link:
+          Value: true
+        red2/camera_rgb_frame:
+          Value: true
+        red2/camera_rgb_optical_frame:
+          Value: true
+        red2/caster_back_left_link:
+          Value: true
+        red2/caster_back_right_link:
+          Value: true
+        red2/imu_link:
+          Value: true
+        red2/odom:
+          Value: true
+        red2/spoiler:
+          Value: true
+        red2/stem_left:
+          Value: true
+        red2/stem_right:
+          Value: true
+        red2/wheel_left_link:
+          Value: true
+        red2/wheel_right_link:
+          Value: true
+        red3/base_footprint:
+          Value: true
+        red3/base_link:
+          Value: true
+        red3/base_scan:
+          Value: true
+        red3/camera_link:
+          Value: true
+        red3/camera_rgb_frame:
+          Value: true
+        red3/camera_rgb_optical_frame:
+          Value: true
+        red3/caster_back_left_link:
+          Value: true
+        red3/caster_back_right_link:
+          Value: true
+        red3/imu_link:
+          Value: true
+        red3/odom:
+          Value: true
+        red3/spoiler:
+          Value: true
+        red3/stem_left:
+          Value: true
+        red3/stem_right:
+          Value: true
+        red3/wheel_left_link:
+          Value: true
+        red3/wheel_right_link:
           Value: true
       Marker Alpha: 1
       Marker Scale: 1
@@ -178,30 +419,30 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
-          p_jfernandes/odom:
-            p_jfernandes/base_footprint:
-              p_jfernandes/base_link:
-                p_jfernandes/base_scan:
+          blue1/odom:
+            blue1/base_footprint:
+              blue1/base_link:
+                blue1/base_scan:
                   {}
-                p_jfernandes/camera_link:
-                  p_jfernandes/camera_rgb_frame:
-                    p_jfernandes/camera_rgb_optical_frame:
+                blue1/camera_link:
+                  blue1/camera_rgb_frame:
+                    blue1/camera_rgb_optical_frame:
                       {}
-                p_jfernandes/caster_back_left_link:
+                blue1/caster_back_left_link:
                   {}
-                p_jfernandes/caster_back_right_link:
+                blue1/caster_back_right_link:
                   {}
-                p_jfernandes/imu_link:
+                blue1/imu_link:
                   {}
-                p_jfernandes/spoiler:
+                blue1/spoiler:
                   {}
-                p_jfernandes/stem_left:
+                blue1/stem_left:
                   {}
-                p_jfernandes/stem_right:
+                blue1/stem_right:
                   {}
-                p_jfernandes/wheel_left_link:
+                blue1/wheel_left_link:
                   {}
-                p_jfernandes/wheel_right_link:
+                blue1/wheel_right_link:
                   {}
       Update Interval: 0
       Value: true
@@ -228,14 +469,14 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.030000001192092896
       Style: Flat Squares
-      Topic: /p_jfernandes/scan
+      Topic: /blue1/scan
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /p_jfernandes/camera/rgb/image_raw
+      Image Topic: /blue1/camera/rgb/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -276,7 +517,7 @@ Visualization Manager:
       Radius: 0.029999999329447746
       Shaft Diameter: 0.10000000149011612
       Shaft Length: 0.10000000149011612
-      Topic: /p_jfernandes/move_base/NavfnROS/plan
+      Topic: /blue1/move_base/NavfnROS/plan
       Unreliable: false
       Value: true
     - Class: rviz/Group
@@ -287,7 +528,7 @@ Visualization Manager:
           Draw Behind: true
           Enabled: true
           Name: Costmap
-          Topic: /p_jfernandes/move_base/global_costmap/costmap
+          Topic: /blue1/move_base/global_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: true
@@ -312,7 +553,7 @@ Visualization Manager:
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /p_jfernandes/move_base/DWAPlannerROS/global_plan
+          Topic: /blue1/move_base/DWAPlannerROS/global_plan
           Unreliable: false
           Value: true
       Enabled: true
@@ -325,7 +566,7 @@ Visualization Manager:
           Enabled: true
           Name: Polygon
           Queue Size: 10
-          Topic: /p_jfernandes/move_base/local_costmap/footprint
+          Topic: /blue1/move_base/local_costmap/footprint
           Unreliable: false
           Value: true
         - Alpha: 0.699999988079071
@@ -334,7 +575,7 @@ Visualization Manager:
           Draw Behind: false
           Enabled: true
           Name: Costmap
-          Topic: /p_jfernandes/move_base/local_costmap/costmap
+          Topic: /blue1/move_base/local_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: true
@@ -359,7 +600,7 @@ Visualization Manager:
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /p_jfernandes/move_base/DWAPlannerROS/local_plan
+          Topic: /blue1/move_base/DWAPlannerROS/local_plan
           Unreliable: false
           Value: true
       Enabled: true
@@ -378,7 +619,7 @@ Visualization Manager:
       Shaft Length: 0.23000000417232513
       Shaft Radius: 0.009999999776482582
       Shape: Arrow (Flat)
-      Topic: /p_jfernandes/particlecloud
+      Topic: /blue1/particlecloud
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -394,14 +635,14 @@ Visualization Manager:
       Shaft Length: 0.5
       Shaft Radius: 0.05000000074505806
       Shape: Axes
-      Topic: /p_jfernandes/move_base/current_goal
+      Topic: /blue1/move_base/current_goal
       Unreliable: false
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: map
+    Fixed Frame: blue1/odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -420,7 +661,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -1.6107962131500244
+      Angle: -1.5357962846755981
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -430,7 +671,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 41.10832977294922
+      Scale: 70.39307403564453
       Target Frame: <Fixed Frame>
       X: -0.23046889901161194
       Y: 1.473912239074707
@@ -453,5 +694,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1279
-  X: 0
-  Y: 27
+  X: 167
+  Y: 225
