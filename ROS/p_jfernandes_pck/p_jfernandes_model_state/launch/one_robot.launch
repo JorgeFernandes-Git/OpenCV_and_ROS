@@ -1,0 +1,16 @@
+<launch>
+
+    <!--    BLUE ROBOT 1-->
+    <node name="Blue1_model_state" pkg="p_jfernandes_model_state" type="get_model_state.py" output="screen">
+        <param name="robot_name" value="blue1"/>
+        <param name="robot_to_catch_1" value="red1"/>
+        <param name="robot_to_catch_2" value="red2"/>
+        <param name="robot_to_catch_3" value="red3"/>
+        <param name="robot_to_escape_1" value="green1"/>
+        <param name="robot_to_escape_2" value="green2"/>
+        <param name="robot_to_escape_3" value="green3"/>
+
+        <remap from="p_jfernandes/move_base_simple/goal" to="blue1/move_base_simple/goal"/>
+    </node>
+
+</launch>

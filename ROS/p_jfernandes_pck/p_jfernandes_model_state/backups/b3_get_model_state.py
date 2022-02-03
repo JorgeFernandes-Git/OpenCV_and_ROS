@@ -2,7 +2,7 @@
 
 import math
 
-from gazebo_msgs.srv import GetModelState
+from gazebo_msgs.srv import GetModelState, SetModelState
 from geometry_msgs.msg import PoseStamped
 import rospy
 
@@ -53,29 +53,25 @@ def main():
 
     # flags
     to_escape_near = False
-    rospy.wait_for_service(get_model_state)
-    g_get_state = rospy.ServiceProxy(get_model_state, GetModelState)
 
     while True:
-        # reset the list to store new position
-        robot_to_catch_poses_x.clear()
-        robot_to_catch_poses_y.clear()
-        robot_to_escape_poses_x.clear()
-        robot_to_escape_poses_y.clear()
-        distances_to_catch.clear()
-        distances_to_escape.clear()
+        g_get_state = rospy.ServiceProxy(get_model_state, GetModelState)
+        rospy.wait_for_service(get_model_state)
 
-        state_my_pos = g_get_state(model_name=robot_name)
+        try:
+            state_my_pos = g_get_state(model_name=robot_name)
 
-        state_to_catch_1 = g_get_state(model_name=robot_to_catch_1)
-        state_to_catch_2 = g_get_state(model_name=robot_to_catch_2)
-        state_to_catch_3 = g_get_state(model_name=robot_to_catch_3)
+            state_to_catch_1 = g_get_state(model_name=robot_to_catch_1)
+            state_to_catch_2 = g_get_state(model_name=robot_to_catch_2)
+            state_to_catch_3 = g_get_state(model_name=robot_to_catch_3)
 
-        state_to_escape_1 = g_get_state(model_name=robot_to_escape_1)
-        state_to_escape_2 = g_get_state(model_name=robot_to_escape_2)
-        state_to_escape_3 = g_get_state(model_name=robot_to_escape_3)
+            state_to_escape_1 = g_get_state(model_name=robot_to_escape_1)
+            state_to_escape_2 = g_get_state(model_name=robot_to_escape_2)
+            state_to_escape_3 = g_get_state(model_name=robot_to_escape_3)
 
-        # print(state_my_pos)
+        except Exception as e:
+            rospy.logerr('Error on calling service: %s', str(e))
+            return
 
         # player robot position
         x_pos = state_my_pos.pose.position.x
@@ -145,7 +141,6 @@ def main():
 
             min_dist_to_catch = min(distances_to_catch)
             # print(min_dist_to_catch)
-            # print(distances_to_catch)
 
             if min_dist_to_catch == distances_to_catch[0]:
                 goal_to_catch.pose.position.x = x_to_catch_1

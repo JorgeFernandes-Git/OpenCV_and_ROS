@@ -19,7 +19,7 @@
     <!--    <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" />-->
     <!--  </node>-->
 
-    <arg name="robot_namespace" default="p_jfernandes"/>
+    <arg name="robot_namespace" default="blue1"/>
 
     <!-- move_base multi robots-->
     <group ns="$(arg robot_namespace)">

@@ -223,7 +223,7 @@ class Server:
 
                 # draw the biggest contour (c) in green
                 cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
-                cv2.putText(edges, '+', (int(x+w/2), int(y+h/2)), cv2.FONT_ITALIC, 1, (255, 0, 0), 2, cv2.LINE_8)
+                cv2.putText(edges, '+', (int(x+w/2), int(y+h/2)), cv2.FONT_ITALIC, 2, (255, 0, 0), 2, cv2.LINE_8)
 
                 cx_to_catch = int(x+w/2)
                 cy_to_catch = int(y+h/2)
@@ -231,6 +231,7 @@ class Server:
                 cx_to_catch = int(M_to_catch['m10'] / M_to_catch['m00'])
                 cy_to_catch = int(M_to_catch['m01'] / M_to_catch['m00'])
                 # cv2.circle(img, (cx_to_catch, cy_to_catch), 20, (0, 0, 255), -1)
+                cv2.putText(edges, '+', (cx_to_catch, cy_to_catch), cv2.FONT_ITALIC, 2, (255, 0, 0), 2, cv2.LINE_8)
 
             # find center
             threshold = cx_to_catch - width / 2
