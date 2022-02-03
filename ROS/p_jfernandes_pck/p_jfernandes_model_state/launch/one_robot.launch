@@ -10,6 +10,8 @@
         <param name="robot_to_escape_2" value="green2"/>
         <param name="robot_to_escape_3" value="green3"/>
 
+        <param name="robot_move_base" value='blue1/move_base'/>
+
         <remap from="p_jfernandes/move_base_simple/goal" to="blue1/move_base_simple/goal"/>
     </node>
 

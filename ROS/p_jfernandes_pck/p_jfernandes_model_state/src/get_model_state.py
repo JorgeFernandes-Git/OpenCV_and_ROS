@@ -33,6 +33,8 @@ def main():
     rospy.init_node('get_robot_position')  # init node
     rate = rospy.Rate(rate_hz)  # rate to sleep
 
+    robot_move_base = rospy.get_param("~robot_move_base", default='blue1/move_base')
+
     robot_name = rospy.get_param("~robot_name", default="blue1")  # robot player
 
     robot_to_catch_1 = rospy.get_param("~robot_to_catch_1", default="red1")  # robot to catch 1
@@ -48,7 +50,7 @@ def main():
     g_get_state = rospy.ServiceProxy(get_model_state, GetModelState)
 
     # Create an action client called "move_base" with action definition file "MoveBaseAction"
-    client = actionlib.SimpleActionClient('blue1/move_base', MoveBaseAction)
+    client = actionlib.SimpleActionClient(robot_move_base, MoveBaseAction)
     # Waits until the action server has started up and started listening for goals.
     client.wait_for_server()
 
