@@ -43,18 +43,18 @@ def main():
     robot_to_escape_2 = rospy.get_param("~robot_to_escape_2", default="green2")  # robot to escape 2
     robot_to_escape_3 = rospy.get_param("~robot_to_escape_3", default="green3")  # robot to escape 3
 
-    # pose stamped objects
-    goal_to_catch = MoveBaseGoal()
-    goal_to_escape = MoveBaseGoal()
-
     # gazebo get model state
     rospy.wait_for_service(get_model_state)
     g_get_state = rospy.ServiceProxy(get_model_state, GetModelState)
 
     # Create an action client called "move_base" with action definition file "MoveBaseAction"
-    client = actionlib.SimpleActionClient(robot_name, MoveBaseAction)
+    client = actionlib.SimpleActionClient('blue1/move_base', MoveBaseAction)
     # Waits until the action server has started up and started listening for goals.
     client.wait_for_server()
+
+    # move base goal objects
+    goal_to_catch = MoveBaseGoal()
+    goal_to_escape = MoveBaseGoal()
 
     while True:
         # reset the lists to store new position
