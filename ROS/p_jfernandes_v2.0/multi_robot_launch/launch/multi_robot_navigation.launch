@@ -1,6 +1,6 @@
 <launch>
     <!--    map path to file-->
-    <arg name="map_file" default="$(find p_jfernandes_navigation)/maps/th_arena_3.yaml"/>
+    <arg name="map_file" default="$(find p_g06_navigation)/maps/th_arena_3.yaml"/>
 
     <!--    positions for amcl node-->
     <arg name="initial_pose_x" default="-1.0"/>
@@ -8,7 +8,7 @@
     <arg name="initial_pose_a" default="3.14"/>
 
     <!--    argument for robot name-->
-    <arg name="robot_namespace" default="p_jfernandes"/>
+    <arg name="robot_namespace" default="blue1"/>
 
     <!--    arguments to open rviz and map node when launching multiple robots-->
     <arg name="open_rviz" default="false"/>
@@ -18,7 +18,7 @@
     <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
 
     <!--    BLUE ROBOT 1-->
-    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+    <include file="$(find p_g06_navigation)/launch/p_g06_navigation.launch">
         <arg name="robot_namespace" value="blue1"/>
         <!--        initial pose-->
         <arg name="initial_pose_x" value="-8.0"/>
@@ -29,7 +29,7 @@
     </include>
 
     <!--    BLUE ROBOT 2-->
-    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+    <include file="$(find p_g06_navigation)/launch/p_g06_navigation.launch">
         <arg name="robot_namespace" value="blue2"/>
         <!--        initial pose-->
         <arg name="initial_pose_x" value="-8.0"/>
@@ -40,7 +40,7 @@
     </include>
 
     <!--    BLUE ROBOT 3-->
-    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+    <include file="$(find p_g06_navigation)/launch/p_g06_navigation.launch">
         <arg name="robot_namespace" value="blue3"/>
         <!--        initial pose-->
         <arg name="initial_pose_x" value="-8.0"/>
@@ -53,7 +53,7 @@
     <!--***********************************************************************-->
 
     <!--    RED ROBOT 1-->
-    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+    <include file="$(find p_g06_navigation)/launch/p_g06_navigation.launch">
         <arg name="robot_namespace" value="red1"/>
         <!--        initial pose-->
         <arg name="initial_pose_x" value="4.0"/>
@@ -63,7 +63,7 @@
     </include>
 
     <!--    RED ROBOT 2-->
-    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+    <include file="$(find p_g06_navigation)/launch/p_g06_navigation.launch">
         <arg name="robot_namespace" value="red2"/>
         <!--        initial pose-->
         <arg name="initial_pose_x" value="4.0"/>
@@ -73,7 +73,7 @@
     </include>
 
     <!--    RED ROBOT 3-->
-    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+    <include file="$(find p_g06_navigation)/launch/p_g06_navigation.launch">
         <arg name="robot_namespace" value="red3"/>
         <!--        initial pose-->
         <arg name="initial_pose_x" value="5.0"/>
@@ -85,7 +85,7 @@
     <!--***********************************************************************-->
 
     <!--    GREEN ROBOT 1-->
-    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+    <include file="$(find p_g06_navigation)/launch/p_g06_navigation.launch">
         <arg name="robot_namespace" value="green1"/>
         <!--        initial pose-->
         <arg name="initial_pose_x" value="5.0"/>
@@ -95,7 +95,7 @@
     </include>
 
     <!--    GREEN ROBOT 2-->
-    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+    <include file="$(find p_g06_navigation)/launch/p_g06_navigation.launch">
         <arg name="robot_namespace" value="green2"/>
         <!--        initial pose-->
         <arg name="initial_pose_x" value="5.0"/>
@@ -105,7 +105,7 @@
     </include>
 
     <!--    GREEN ROBOT 3-->
-    <include file="$(find p_jfernandes_navigation)/launch/turtlebot3_navigation.launch">
+    <include file="$(find p_g06_navigation)/launch/p_g06_navigation.launch">
         <arg name="robot_namespace" value="green3"/>
         <!--        initial pose-->
         <arg name="initial_pose_x" value="6.0"/>
