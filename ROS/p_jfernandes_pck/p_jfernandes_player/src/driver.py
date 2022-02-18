@@ -9,7 +9,7 @@ from tf2_geometry_msgs import PointStamped
 from geometry_msgs.msg import PoseStamped, Twist
 
 # topics
-cmd_vel_node = rospy.remap_name("/p_jfernandes/cmd_vel")
+cmd_vel_node = rospy.remap_name("/blue1/cmd_vel")
 pose_stamped_node = rospy.remap_name("/move_base_simple/goal")
 
 
@@ -66,9 +66,9 @@ class Driver:
         goal_present_time = copy.deepcopy(goal)
         goal_present_time.header.stamp = rospy.Time.now()
 
-        # print(goal_present_time)
+        print(goal_present_time)
 
-        target_frame = "p_jfernandes/base_link"  # frame to transform final position
+        target_frame = "blue1/base_link"  # frame to transform final position
         try:
             goal_in_base_link = self.tf_buffer.transform(goal_present_time, target_frame, rospy.Duration(1))
             # print(goal_in_base_link)
