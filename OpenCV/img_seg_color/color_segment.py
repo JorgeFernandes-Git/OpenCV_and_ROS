@@ -9,7 +9,7 @@ from cv2 import FONT_ITALIC
 Script to segment the colors on a video from the pc webcam or image
 """
 
-path_to_img = "green_car.jpg"
+path_to_img = "../HSV_values/car images/green_car.jpg"
 image_file = path_to_img + ".json"
 
 
