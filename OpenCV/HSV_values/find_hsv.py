@@ -5,7 +5,7 @@ import numpy as np
 import time
 import json
 
-path_to_img = "../HSV_values/car images/red_car.jpg"
+path_to_img = "../HSV_values/car images/green_car.jpg"
 image_file = path_to_img + ".json"
 
 
